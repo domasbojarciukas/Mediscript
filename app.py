@@ -2,12 +2,12 @@ import streamlit as st
 import openai
 
 # -------------------------------
-# Set OpenAI API key from Streamlit Secrets
+# OpenAI API key from Streamlit Secrets
 # -------------------------------
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 # -------------------------------
-# Function to load prompts
+# Function to load system prompt
 # -------------------------------
 def load_prompt(report_type):
     if report_type == "Erstbericht":
@@ -23,10 +23,21 @@ def load_prompt(report_type):
 st.title("mediscript – Swiss Ambulatory Reports")
 
 report_type = st.selectbox("Berichtstyp", ["Erstbericht", "Verlaufsbericht"])
-datum = st.text_input("Datum (dd.mm.yyyy)")
-klinisch = st.text_area("Klinische Angaben / Verlauf")
-befunde = st.text_area("Labor / Bildgebung")
-therapie = st.text_area("Therapie / Medikation")
+
+# Dynamically display fields depending on report type
+if report_type == "Erstbericht":
+    zuweisung = st.text_input("Zuweisung (Wer, Datum, Anlass)")
+    verdachtsdiagnose = st.text_area("Verdachtsdiagnose")
+    befunde = st.text_area("Befunde (Labor, Bilder, Untersuchung)")
+    klinische_einschaetzung = st.text_area("Klinische Einschätzung")
+    therapeutisches_vorgehen = st.text_area("Therapeutisches Vorgehen")
+
+elif report_type == "Verlaufsbericht":
+    patient = st.text_input("Patient / Verlaufskontrolle am (Datum)")
+    verlauf = st.text_area("Verlauf seit letzter Konsultation")
+    neue_befunde = st.text_area("Neue Befunde")
+    beurteilung = st.text_area("Beurteilung")
+    therapie_weiteres = st.text_area("Therapie / Weiteres Vorgehen")
 
 # -------------------------------
 # Generate report button
@@ -35,17 +46,28 @@ if st.button("Bericht generieren"):
 
     system_prompt = load_prompt(report_type)
 
-    user_input = f"""
-Datum: {datum}
-Klinische Angaben: {klinisch}
+    # Build user input depending on report type
+    if report_type == "Erstbericht":
+        user_input = f"""
+Zuweisung: {zuweisung}
+Verdachtsdiagnose: {verdachtsdiagnose}
 Befunde: {befunde}
-Therapie: {therapie}
+Klinische Einschätzung: {klinische_einschaetzung}
+Therapeutisches Vorgehen: {therapeutisches_vorgehen}
+"""
+    else:
+        user_input = f"""
+Patient: {patient}
+Verlauf seit letzter Konsultation: {verlauf}
+Neue Befunde: {neue_befunde}
+Beurteilung: {beurteilung}
+Therapie / Weiteres Vorgehen: {therapie_weiteres}
 """
 
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-4o-mini",
-            temperature=0.2,
+            model="gpt-4.1",
+            temperature=0.3,
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_input}
@@ -57,4 +79,4 @@ Therapie: {therapie}
     except Exception as e:
         report_text = f"Fehler bei der Berichtserstellung: {e}"
 
-    st.text_area("Generierter Bericht", report_text, height=400)
+    st.text_area("Generierter Bericht", report_text, height=500)
