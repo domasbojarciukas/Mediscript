@@ -30,23 +30,21 @@ if st.button("Bericht generieren"):
     system_prompt = load_prompt(report_type)
 
     user_input = f"""
-    Datum: {datum}
-    Klinische Angaben: {klinisch}
-    Befunde: {befunde}
-    Therapie: {therapie}
-    """
+Datum: {datum}
+Klinische Angaben: {klinisch}
+Befunde: {befunde}
+Therapie: {therapie}
+"""
 
-response = openai.ChatCompletion.create(
-    model="gpt-4o-mini",
-    temperature=0.2,
-    messages=[
-        {"role": "system", "content": system_prompt},
-        {"role": "user", "content": user_input}
-    ]
-)
+    response = openai.ChatCompletion.create(
+        model="gpt-4o-mini",
+        temperature=0.2,
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_input}
+        ]
+    )
 
     st.text_area(
-        "Generierter Bericht",
-        response.choices[0].message.content,
-        height=400
+        "Generierter Bericht", response.choices[0].message.content, height=400
     )
