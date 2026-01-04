@@ -1,11 +1,11 @@
 import streamlit as st
-from openai import OpenAI
+import openai
 
 # Title
 st.title("mediscript – Swiss Ambulatory Reports")
 
 # Load OpenAI client
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 # Function to load prompt text
 def load_prompt(report_type):
@@ -36,14 +36,14 @@ if st.button("Bericht generieren"):
     Therapie: {therapie}
     """
 
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        temperature=0.2,
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_input}
-        ]
-    )
+response = openai.ChatCompletion.create(
+    model="gpt-4o-mini",
+    temperature=0.2,
+    messages=[
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_input}
+    ]
+)
 
     st.text_area(
         "Generierter Bericht",
