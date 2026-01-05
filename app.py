@@ -20,7 +20,7 @@ def load_prompt(report_type):
 # -------------------------------
 # Streamlit UI
 # -------------------------------
-st.title("Mediscript – Schweizer Medizinische Berichte")
+st.title("Mediscript – Schweizer Medizinische Dokumentation")
 
 report_type = st.selectbox("Berichtstyp", ["Ambulanter Erstbericht", "Ambulanter Verlaufsbericht"])
 
