@@ -10,7 +10,7 @@ openai.api_key = st.secrets["OPENAI_API_KEY"]
 # Function to load system prompt
 # -------------------------------
 def load_prompt(report_type):
-    if report_type == "Erstbericht":
+    if report_type == "Ambulanter Erstbericht":
         path = "prompts/erstbericht.txt"
     else:
         path = "prompts/verlaufsbericht.txt"
@@ -22,17 +22,17 @@ def load_prompt(report_type):
 # -------------------------------
 st.title("Mediscript – Schweizer Medizinische Berichte")
 
-report_type = st.selectbox("Berichtstyp", ["Erstbericht", "Verlaufsbericht"])
+report_type = st.selectbox("Berichtstyp", ["Ambulanter Erstbericht", "Ambulanter Verlaufsbericht"])
 
 # Dynamically display fields depending on report type
-if report_type == "Erstbericht":
+if report_type == "Ambulanter Erstbericht":
     zuweisung = st.text_input("Zuweisung (Wer, Datum, Anlass)")
     verdachtsdiagnose = st.text_area("Verdachtsdiagnose")
     befunde = st.text_area("Befunde (Labor, Bilder, Untersuchung)")
     klinische_einschaetzung = st.text_area("Klinische Einschätzung")
     therapeutisches_vorgehen = st.text_area("Therapeutisches Vorgehen")
 
-elif report_type == "Verlaufsbericht":
+elif report_type == "Ambulanter Verlaufsbericht":
     patient = st.text_input("Patient / Verlaufskontrolle am (Datum)")
     verlauf = st.text_area("Verlauf seit letzter Konsultation")
     neue_befunde = st.text_area("Neue Befunde")
@@ -47,7 +47,7 @@ if st.button("Bericht generieren"):
     system_prompt = load_prompt(report_type)
 
     # Build user input depending on report type
-    if report_type == "Erstbericht":
+    if report_type == "Ambulanter Erstbericht":
         user_input = f"""
 Zuweisung: {zuweisung}
 Verdachtsdiagnose: {verdachtsdiagnose}
