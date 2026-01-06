@@ -75,32 +75,6 @@ elif doc_type == "Stationärer Bericht":
 # -----------------------------
 # Generate Bericht
 # -----------------------------
-if st.button("Bericht generieren") and user_input.strip() != "":
-    with st.spinner("Bericht wird generiert… Bitte warten."):
-        # Map document type to secrets prompt
-        prompt_key = {
-            "Ambulanter Erstbericht": "ERSTBERICHT_PROMPT",
-            "Ambulanter Verlaufsbericht": "VERLAUF_PROMPT",
-            "Kostengutsprache Medikament": "KOSTENGUT_MED_PROMPT",
-            "Kostengutsprache Rehabilitation": "KOSTENGUT_REHA_PROMPT",
-            "Stationärer Bericht": "STATIONAER_PROMPT"
-        }[doc_type]
-
-        prompt_text = st.secrets[prompt_key]
-
-        # OpenAI API call
-        response = client.chat.completions.create(
-            model="gpt-4.1",
-            messages=[
-                {"role": "system", "content": prompt_text},
-                {"role": "user", "content": user_input}
-            ],
-            temperature=0.3
-        )
-
-        generated_text = response.choices[0].message.content
-
-import streamlit.components.v1 as components
 
 if st.button("Bericht generieren") and user_input.strip() != "":
     with st.spinner("Bericht wird generiert… Bitte warten."):
