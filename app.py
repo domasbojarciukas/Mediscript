@@ -102,7 +102,14 @@ Therapie / Weiteres Vorgehen: {therapie_weiteres}
     except Exception as e:
         report_text = f"Fehler bei der Berichtserstellung: {e}"
 
-    st.text_area("Generierter Bericht", report_text, height=500)
+    st.markdown("### Generierter Bericht")
+st.text_area(
+    label="",
+    value=generated_text,
+    height=350
+)
+
+st.button("Text kopieren")
 
 st.caption(
     "Dieses Tool dient der Unterstützung beim Verfassen medizinischer Texte. "
