@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 from openai import OpenAI
 
 # -----------------------------
@@ -104,18 +105,34 @@ if st.button("Bericht generieren") and user_input.strip() != "":
     st.text_area(label="", value=generated_text, height=350)
 
     # Copy-to-clipboard button (robust)
-    import streamlit.components.v1 as components
+    safe_text = generated_text.replace("`", "\\`").replace("\\", "\\\\").replace("\n", "\\n").replace('"', '\\"')
     components.html(f"""
-    <button onclick="
-      const ta = document.createElement('textarea');
-      ta.value = `{generated_text.replace('`','\\`')}`;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      alert('Bericht in die Zwischenablage kopiert!');
-    ">Bericht kopieren</button>
-    """, height=50, width=200)
+    <button style="
+        width: 260px;
+        height: 60px;
+        font-size: 18px;
+        font-weight: bold;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    "
+    onmouseover="this.style.backgroundColor='#45a049';"
+    onmouseout="this.style.backgroundColor='#4CAF50';"
+    onclick="
+        const ta = document.createElement('textarea');
+        ta.value = `{safe_text}`;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        alert('Bericht in die Zwischenablage kopiert!');
+    ">
+    Bericht kopieren
+    </button>
+    """, height=70, width=300)
     
 # -------------------------
 # Optional disclaimer
