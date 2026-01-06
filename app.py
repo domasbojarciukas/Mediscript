@@ -107,20 +107,30 @@ if "generated_text" in st.session_state:
     st.markdown("### Generierter Bericht")
     st.text_area(label="", value=generated_text, height=350)
 
-    # Streamlit button for style
-    copy_clicked = st.button("Bericht kopieren")
-    
-    if copy_clicked:
-        # Use JS to copy without page reload
-        safe_text = generated_text.replace("`","\\`").replace("\\","\\\\").replace("\n","\\n").replace('"','\\"')
-        components.html(f"""
-            <script>
-                const text = `{safe_text}`;
-                navigator.clipboard.writeText(text).then(() => {{
-                    alert('Bericht in die Zwischenablage kopiert!');
-                }});
-            </script>
-        """, height=0)
+    # Copy-to-clipboard as HTML button
+    safe_text = generated_text.replace("`","\\`").replace("\\","\\\\").replace("\n","\\n").replace('"','\\"')
+    primary_color = st.get_option("theme.primaryColor")
+
+    components.html(f"""
+        <button style="
+            padding: 0.45em 1em;
+            font-size: 1em;
+            font-weight: 600;
+            border-radius: 0.25em;
+            border: none;
+            background-color: {primary_color};
+            color: white;
+            cursor: pointer;
+        "
+        onclick="
+            const text = `{safe_text}`;
+            navigator.clipboard.writeText(text).then(() => {{
+                alert('Bericht in die Zwischenablage kopiert!');
+            }});
+        ">
+            Bericht kopieren
+        </button>
+    """, height=40)
     
 # -------------------------
 # Optional disclaimer
