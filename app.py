@@ -1,5 +1,5 @@
 import streamlit as st
-import openai 
+from openai import OpenAI
 
 # MUST be the first Streamlit command
 st.set_page_config(
@@ -27,7 +27,7 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 # -------------------------------
 # OpenAI API key from Streamlit Secrets
 # -------------------------------
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 # -------------------------------
 # Function to load system prompt
