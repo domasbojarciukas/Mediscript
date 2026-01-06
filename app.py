@@ -107,7 +107,16 @@ if st.button("Bericht generieren") and user_input.strip() != "":
         value=generated_text,
         height=350
     )
-    st.button("Text kopieren")  # for later: implement copy functionality
+    
+    # Copy button using JS
+    st.markdown(
+        f"""
+        <button onclick="navigator.clipboard.writeText(`{generated_text.replace('`','\\`')}`)">
+            Bericht kopieren
+        </button>
+        """,
+        unsafe_allow_html=True
+    )
     
 # -------------------------
 # Optional disclaimer
