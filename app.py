@@ -43,7 +43,7 @@ def load_prompt(report_type):
 # -------------------------------
 # Streamlit UI
 # -------------------------------
-st.title("Schweizer Medizinische Dokumentation")
+st.title("Mediscript - Schweizer Medizinische Dokumentation")
 
 report_type = st.selectbox("Berichtstyp", ["Ambulanter Erstbericht", "Ambulanter Verlaufsbericht"])
 
@@ -103,3 +103,8 @@ Therapie / Weiteres Vorgehen: {therapie_weiteres}
         report_text = f"Fehler bei der Berichtserstellung: {e}"
 
     st.text_area("Generierter Bericht", report_text, height=500)
+
+st.caption(
+    "Dieses Tool dient der Unterstützung beim Verfassen medizinischer Texte. "
+    "Die inhaltliche Verantwortung verbleibt bei der behandelnden Ärztin / beim behandelnden Arzt."
+)
