@@ -101,35 +101,26 @@ if st.button("Bericht generieren") and user_input.strip() != "":
          # Save report to session state
         st.session_state.generated_text = response.choices[0].message.content
 
-# -----------------------------
-# Display report if available
-# -----------------------------
+# Show report if generated
 if "generated_text" in st.session_state:
     generated_text = st.session_state.generated_text
     st.markdown("### Generierter Bericht")
     st.text_area(label="", value=generated_text, height=350)
 
-    # Copy-to-clipboard button as pure HTML/JS
-    safe_text = generated_text.replace("`","\\`").replace("\\","\\\\").replace("\n","\\n").replace('"','\\"')
-    components.html(f"""
-        <button style="
-            padding: 10px 25px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            background-color: #f0f2f6;
-            cursor: pointer;
-        "
-        onclick="
-            const text = `{safe_text}`;
-            navigator.clipboard.writeText(text).then(() => {{
-                alert('Bericht in die Zwischenablage kopiert!');
-            }});
-        ">
-            Bericht kopieren
-        </button>
-    """, height=50)
+    # Streamlit button for style
+    copy_clicked = st.button("Bericht kopieren")
+    
+    if copy_clicked:
+        # Use JS to copy without page reload
+        safe_text = generated_text.replace("`","\\`").replace("\\","\\\\").replace("\n","\\n").replace('"','\\"')
+        components.html(f"""
+            <script>
+                const text = `{safe_text}`;
+                navigator.clipboard.writeText(text).then(() => {{
+                    alert('Bericht in die Zwischenablage kopiert!');
+                }});
+            </script>
+        """, height=0)
     
 # -------------------------
 # Optional disclaimer
