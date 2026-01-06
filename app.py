@@ -100,16 +100,24 @@ if st.button("Bericht generieren") and user_input.strip() != "":
 
         generated_text = response.choices[0].message.content
 
-    # Display generated report
+import streamlit.components.v1 as components
+
+if generated_text:
     st.markdown("### Generierter Bericht")
     st.text_area(label="", value=generated_text, height=350)
 
-    # Copy / download button
-    st.download_button(
-        label="Bericht kopieren",
-        data=generated_text,
-        file_name=None,
-        mime="text/plain"
+    # Copy to clipboard button using JS
+    components.html(
+        f"""
+        <button onclick="
+            const text = `{generated_text.replace('`','\\`')}`;
+            navigator.clipboard.writeText(text).then(() => {{
+                alert('Bericht in die Zwischenablage kopiert!');
+            }});
+        ">Bericht kopieren</button>
+        """,
+        height=50,
+        width=200,
     )
     
 # -------------------------
