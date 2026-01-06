@@ -105,29 +105,16 @@ if st.button("Bericht generieren") and user_input.strip() != "":
     st.text_area(label="", value=generated_text, height=350)
 
     # Copy-to-clipboard button (robust)
-    safe_text = generated_text.replace("`", "\\`").replace("\\", "\\\\").replace("\n", "\\n").replace('"', '\\"')
+    if st.button("Bericht kopieren"):
+    safe_text = generated_text.replace("`","\\`").replace("\\","\\\\").replace("\n","\\n").replace('"','\\"')
     components.html(f"""
-    <button style="
-        font-size: 16px;
-        font-weight: 600;
-        padding: 10px 25px;
-        border-radius: 4px;
-        border: 1px solid #ccc;
-        background-color: #f0f2f6;
-        cursor: pointer;
-    "
-    onclick="
-        const ta = document.createElement('textarea');
-        ta.value = `{safe_text}`;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        alert('Bericht in die Zwischenablage kopiert!');
-    ">
-        Bericht kopieren
-    </button>
-    """, height=50)
+        <script>
+            const text = `{safe_text}`;
+            navigator.clipboard.writeText(text).then(() => {{
+                alert('Bericht in die Zwischenablage kopiert!');
+            }});
+        </script>
+    """, height=0)
     
 # -------------------------
 # Optional disclaimer
