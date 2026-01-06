@@ -98,23 +98,28 @@ if st.button("Bericht generieren") and user_input.strip() != "":
             temperature=0.3
         )
 
-        generated_text = response.choices[0].message.content
+         # Save report to session state
+        st.session_state.generated_text = response.choices[0].message.content
 
-    # Show generated report + copy button
-        # -----------------------------
-        st.markdown("### Generierter Bericht")
-        st.text_area(label="", value=generated_text, height=350)
+# -----------------------------
+# Display report if available
+# -----------------------------
+if "generated_text" in st.session_state:
+    generated_text = st.session_state.generated_text
+    st.markdown("### Generierter Bericht")
+    st.text_area(label="", value=generated_text, height=350)
 
-        if st.button("Bericht kopieren"):
-            safe_text = generated_text.replace("`","\\`").replace("\\","\\\\").replace("\n","\\n").replace('"','\\"')
-            components.html(f"""
-                <script>
-                    const text = `{safe_text}`;
-                    navigator.clipboard.writeText(text).then(() => {{
-                        alert('Bericht in die Zwischenablage kopiert!');
-                    }});
-                </script>
-            """, height=0)
+    # Copy-to-clipboard button
+    if st.button("Bericht kopieren"):
+        safe_text = generated_text.replace("`","\\`").replace("\\","\\\\").replace("\n","\\n").replace('"','\\"')
+        components.html(f"""
+            <script>
+                const text = `{safe_text}`;
+                navigator.clipboard.writeText(text).then(() => {{
+                    alert('Bericht in die Zwischenablage kopiert!');
+                }});
+            </script>
+        """, height=0)
     
 # -------------------------
 # Optional disclaimer
