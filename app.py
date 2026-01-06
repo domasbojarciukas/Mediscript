@@ -2,7 +2,7 @@ import streamlit as st
 from openai import OpenAI
 
 # -----------------------------
-# Streamlit page config + hide header/footer
+# Page config + hide header/footer
 # -----------------------------
 st.set_page_config(page_title="Mediscript", layout="centered")
 
@@ -17,26 +17,25 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# -----------------------------
-# OpenAI client using Streamlit secrets
-# -----------------------------
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+st.title("Mediscript - Testphase")
 
 # -----------------------------
-# App title
+# OpenAI client
 # -----------------------------
-st.title("Mediscript - Testphase")
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 # -----------------------------
 # Select document type
 # -----------------------------
 doc_type = st.selectbox(
     "Dokumenttyp auswählen",
-    ("Ambulanter Erstbericht", "Ambulanter Verlaufsbericht", "Kostengutsprache Medikament", "Kostengutsprache Rehabilitation", "Stationärer Bericht")
+    ("Ambulanter Erstbericht", "Ambulanter Verlaufsbericht",
+     "Kostengutsprache Medikament", "Kostengutsprache Rehabilitation",
+     "Stationärer Bericht")
 )
 
 # -----------------------------
-# Define input fields per doc type
+# Input fields per document type
 # -----------------------------
 user_input = ""
 
@@ -74,47 +73,44 @@ elif doc_type == "Stationärer Bericht":
     user_input = f"Patient: {patient}\nAnlass: {anlass}\nBefunde: {befunde}\nTherapie: {therapie}"
 
 # -----------------------------
-# Generate Bericht button
+# Generate Bericht
 # -----------------------------
 if st.button("Bericht generieren") and user_input.strip() != "":
-    # Select correct prompt from secrets
-    prompt_key = {
-        "Ambulanter Erstbericht": "ERSTBERICHT_PROMPT",
-        "Ambulanter Verlaufsbericht": "VERLAUF_PROMPT",
-        "Kostengutsprache Medikament": "KOSTENGUT_MED_PROMPT",
-        "Kostengutsprache Rehabilitation": "KOSTENGUT_REHA_PROMPT",
-        "Stationärer Bericht": "STATIONAER_PROMPT"
-    }[doc_type]
+    with st.spinner("Bericht wird generiert… Bitte warten."):
+        # Map document type to secrets prompt
+        prompt_key = {
+            "Ambulanter Erstbericht": "ERSTBERICHT_PROMPT",
+            "Ambulanter Verlaufsbericht": "VERLAUF_PROMPT",
+            "Kostengutsprache Medikament": "KOSTENGUT_MED_PROMPT",
+            "Kostengutsprache Rehabilitation": "KOSTENGUT_REHA_PROMPT",
+            "Stationärer Bericht": "STATIONAER_PROMPT"
+        }[doc_type]
 
-    prompt_text = st.secrets[prompt_key]
+        prompt_text = st.secrets[prompt_key]
 
-    # Call OpenAI API
-    response = client.chat.completions.create(
-        model="gpt-4.1",
-        messages=[
-            {"role": "system", "content": prompt_text},
-            {"role": "user", "content": user_input}
-        ],
-        temperature=0.3
+        # OpenAI API call
+        response = client.chat.completions.create(
+            model="gpt-4.1",
+            messages=[
+                {"role": "system", "content": prompt_text},
+                {"role": "user", "content": user_input}
+            ],
+            temperature=0.3
+        )
+
+        generated_text = response.choices[0].message.content
+
+    # Display generated report
+    st.markdown("### Generierter Bericht")
+    st.text_area(label="", value=generated_text, height=350)
+
+    # Copy / download button
+    st.download_button(
+        label="Bericht kopieren",
+        data=generated_text,
+        file_name=None,
+        mime="text/plain"
     )
-
-    generated_text = response.choices[0].message.content
-
-# Display output
-st.markdown("### Generierter Bericht")
-st.text_area(
-    label="",
-    value=generated_text,
-    height=350
-)
-
-# Copy/download button
-st.download_button(
-    label="Bericht kopieren",
-    data=generated_text,
-    file_name=None,  # no file, just copy
-    mime="text/plain"
-)
     
 # -------------------------
 # Optional disclaimer
