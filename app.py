@@ -62,55 +62,56 @@ elif report_type == "Ambulanter Verlaufsbericht":
     beurteilung = st.text_area("Beurteilung")
     therapie_weiteres = st.text_area("Therapie / Weiteres Vorgehen")
 
-# -------------------------------
-# Generate report button
-# -------------------------------
-if st.button("Bericht generieren"):
+# -------------------------
+# Placeholder for generated text
+# -------------------------
+generated_text = ""
 
-    system_prompt = load_prompt(report_type)
+# -------------------------
+# Generate Report Button
+# -------------------------
+if st.button("Bericht generieren") and user_input.strip() != "":
+    # choose prompt key depending on doc_type
+    prompt_key = {
+        "Ambulanter Erstbericht": "ERSTBERICHT_PROMPT",
+        "Ambulanter Verlaufsbericht": "VERLAUF_PROMPT",
+        "Kostengutsprache – Medikament": "KOSTENGUT_MED_PROMPT",
+        "Kostengutsprache – Rehabilitation": "KOSTENGUT_REHA_PROMPT",
+        "Stationärer Bericht": "STATIONAER_PROMPT"
+    }[doc_type]
 
-    # Build user input depending on report type
-    if report_type == "Ambulanter Erstbericht":
-        user_input = f"""
-Zuweisung: {zuweisung}
-Verdachtsdiagnose: {verdachtsdiagnose}
-Befunde: {befunde}
-Klinische Einschätzung: {klinische_einschaetzung}
-Therapeutisches Vorgehen: {therapeutisches_vorgehen}
-"""
-    else:
-        user_input = f"""
-Patient: {patient}
-Verlauf seit letzter Konsultation: {verlauf}
-Neue Befunde: {neue_befunde}
-Beurteilung: {beurteilung}
-Therapie / Weiteres Vorgehen: {therapie_weiteres}
-"""
+    prompt = st.secrets[prompt_key]
 
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4.1",
-            temperature=0.3,
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_input}
-            ]
-        )
+    response = client.chat.completions.create(
+        model="gpt-4.1",
+        messages=[
+            {"role": "system", "content": prompt},
+            {"role": "user", "content": user_input}
+        ],
+        temperature=0.3
+    )
 
-        report_text = response.choices[0].message.content
+    generated_text = response.choices[0].message.content
 
-    except Exception as e:
-        report_text = f"Fehler bei der Berichtserstellung: {e}"
-
-    st.markdown("### Generierter Bericht")
+# -------------------------
+# Display Generated Report
+# -------------------------
+st.markdown("### Generierter Bericht")
 st.text_area(
     label="",
     value=generated_text,
     height=350
 )
 
-st.button("Text kopieren")
+# -------------------------
+# Copy Button (Streamlit 1.26+)
+# -------------------------
+if st.button("Text kopieren") and generated_text:
+    st.experimental_set_clipboard(generated_text)
 
+# -------------------------
+# Optional disclaimer
+# -------------------------
 st.caption(
     "Dieses Tool dient der Unterstützung beim Verfassen medizinischer Texte. "
     "Die inhaltliche Verantwortung verbleibt bei der behandelnden Ärztin / beim behandelnden Arzt."
