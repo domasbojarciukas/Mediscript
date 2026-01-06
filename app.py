@@ -100,23 +100,21 @@ if st.button("Bericht generieren") and user_input.strip() != "":
 
     generated_text = response.choices[0].message.content
 
-    # Display output
-    st.markdown("### Generierter Bericht")
-    st.text_area(
-        label="",
-        value=generated_text,
-        height=350
-    )
-    
-    # Copy button using JS
-    st.markdown(
-        f"""
-        <button onclick="navigator.clipboard.writeText(`{generated_text.replace('`','\\`')}`)">
-            Bericht kopieren
-        </button>
-        """,
-        unsafe_allow_html=True
-    )
+# Display output
+st.markdown("### Generierter Bericht")
+st.text_area(
+    label="",
+    value=generated_text,
+    height=350
+)
+
+# Copy/download button
+st.download_button(
+    label="Bericht kopieren",
+    data=generated_text,
+    file_name=None,  # no file, just copy
+    mime="text/plain"
+)
     
 # -------------------------
 # Optional disclaimer
