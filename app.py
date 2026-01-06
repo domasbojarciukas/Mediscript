@@ -1,5 +1,5 @@
 import streamlit as st
-from openai import OpenAI
+import openai 
 
 # MUST be the first Streamlit command
 st.set_page_config(
