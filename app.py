@@ -102,23 +102,46 @@ if st.button("Bericht generieren") and user_input.strip() != "":
 
 import streamlit.components.v1 as components
 
-if generated_text:
+if st.button("Bericht generieren") and user_input.strip() != "":
+    with st.spinner("Bericht wird generiert… Bitte warten."):
+        prompt_key = {
+            "Ambulanter Erstbericht": "ERSTBERICHT_PROMPT",
+            "Ambulanter Verlaufsbericht": "VERLAUF_PROMPT",
+            "Kostengutsprache Medikament": "KOSTENGUT_MED_PROMPT",
+            "Kostengutsprache Rehabilitation": "KOSTENGUT_REHA_PROMPT",
+            "Stationärer Bericht": "STATIONAER_PROMPT"
+        }[doc_type]
+
+        prompt_text = st.secrets[prompt_key]
+
+        response = client.chat.completions.create(
+            model="gpt-4.1",
+            messages=[
+                {"role": "system", "content": prompt_text},
+                {"role": "user", "content": user_input}
+            ],
+            temperature=0.3
+        )
+
+        generated_text = response.choices[0].message.content
+
+    # Show report
     st.markdown("### Generierter Bericht")
     st.text_area(label="", value=generated_text, height=350)
 
-    # Copy to clipboard button using JS
-    components.html(
-        f"""
-        <button onclick="
-            const text = `{generated_text.replace('`','\\`')}`;
-            navigator.clipboard.writeText(text).then(() => {{
-                alert('Bericht in die Zwischenablage kopiert!');
-            }});
-        ">Bericht kopieren</button>
-        """,
-        height=50,
-        width=200,
-    )
+    # Copy-to-clipboard button (robust)
+    import streamlit.components.v1 as components
+    components.html(f"""
+    <button onclick="
+      const ta = document.createElement('textarea');
+      ta.value = `{generated_text.replace('`','\\`')}`;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      alert('Bericht in die Zwischenablage kopiert!');
+    ">Bericht kopieren</button>
+    """, height=50, width=200)
     
 # -------------------------
 # Optional disclaimer
