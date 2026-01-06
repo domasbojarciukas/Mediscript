@@ -105,17 +105,31 @@ if st.button("Bericht generieren") and user_input.strip() != "":
 
     # Copy-to-clipboard button (robust)
     import streamlit.components.v1 as components
-    components.html(f"""
-    <button onclick="
-      const ta = document.createElement('textarea');
-      ta.value = `{generated_text.replace('`','\\`')}`;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      alert('Bericht in die Zwischenablage kopiert!');
-    ">Bericht kopieren</button>
-    """, height=100, width=200)
+
+components.html(f"""
+<button style="
+    width: 250px;
+    height: 60px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+"
+onclick="
+    const ta = document.createElement('textarea');
+    ta.value = `{generated_text.replace('`','\\`')}`;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    alert('Bericht in die Zwischenablage kopiert!');
+">
+Bericht kopieren
+</button>
+""", height=70, width=300)
     
 # -------------------------
 # Optional disclaimer
