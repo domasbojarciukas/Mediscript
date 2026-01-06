@@ -1,5 +1,28 @@
 import streamlit as st
-import openai
+from openai import OpenAI
+
+# MUST be the first Streamlit command
+st.set_page_config(
+    page_title="Mediscript",
+    page_icon="🩺",
+    layout="centered",
+    initial_sidebar_state="collapsed",
+    menu_items={
+        "Get Help": None,
+        "Report a bug": None,
+        "About": None
+    }
+)
+
+# Hide Streamlit UI elements
+hide_streamlit_style = """
+<style>
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+</style>
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 # -------------------------------
 # OpenAI API key from Streamlit Secrets
@@ -20,7 +43,7 @@ def load_prompt(report_type):
 # -------------------------------
 # Streamlit UI
 # -------------------------------
-st.title("Mediscript – Schweizer Medizinische Dokumentation")
+st.title("Schweizer Medizinische Dokumentation")
 
 report_type = st.selectbox("Berichtstyp", ["Ambulanter Erstbericht", "Ambulanter Verlaufsbericht"])
 
