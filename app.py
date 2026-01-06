@@ -115,7 +115,7 @@ if st.button("Bericht generieren") and user_input.strip() != "":
       document.body.removeChild(ta);
       alert('Bericht in die Zwischenablage kopiert!');
     ">Bericht kopieren</button>
-    """, height=50, width=200)
+    """, height=100, width=200)
     
 # -------------------------
 # Optional disclaimer
