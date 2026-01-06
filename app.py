@@ -100,27 +100,21 @@ if st.button("Bericht generieren") and user_input.strip() != "":
 
         generated_text = response.choices[0].message.content
 
-    # Show report
-    st.markdown("### Generierter Bericht")
-    st.text_area(label="", value=generated_text, height=350)
+    # Show generated report + copy button
+        # -----------------------------
+        st.markdown("### Generierter Bericht")
+        st.text_area(label="", value=generated_text, height=350)
 
-   # Copy-to-clipboard button using native Streamlit button
-if generated_text:  # only show this section after Bericht is generated
-    st.markdown("### Generierter Bericht")
-    st.text_area(label="", value=generated_text, height=350)
-
-    # Copy-to-clipboard button (appears only after report)
-    if st.button("Bericht kopieren"):
-        safe_text = generated_text.replace("`","\\`").replace("\\","\\\\").replace("\n","\\n").replace('"','\\"')
-        import streamlit.components.v1 as components
-        components.html(f"""
-            <script>
-                const text = `{safe_text}`;
-                navigator.clipboard.writeText(text).then(() => {{
-                    alert('Bericht in die Zwischenablage kopiert!');
-                }});
-            </script>
-        """, height=0)
+        if st.button("Bericht kopieren"):
+            safe_text = generated_text.replace("`","\\`").replace("\\","\\\\").replace("\n","\\n").replace('"','\\"')
+            components.html(f"""
+                <script>
+                    const text = `{safe_text}`;
+                    navigator.clipboard.writeText(text).then(() => {{
+                        alert('Bericht in die Zwischenablage kopiert!');
+                    }});
+                </script>
+            """, height=0)
     
 # -------------------------
 # Optional disclaimer
