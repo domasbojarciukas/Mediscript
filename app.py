@@ -107,7 +107,16 @@ if st.button("Bericht generieren") and user_input.strip() != "":
     # Copy-to-clipboard button (robust)
     safe_text = generated_text.replace("`", "\\`").replace("\\", "\\\\").replace("\n", "\\n").replace('"', '\\"')
     components.html(f"""
-    <button onclick="
+    <button style="
+        font-size: 16px;
+        font-weight: 600;
+        padding: 10px 25px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        background-color: #f0f2f6;
+        cursor: pointer;
+    "
+    onclick="
         const ta = document.createElement('textarea');
         ta.value = `{safe_text}`;
         document.body.appendChild(ta);
@@ -118,7 +127,7 @@ if st.button("Bericht generieren") and user_input.strip() != "":
     ">
         Bericht kopieren
     </button>
-    """, height=40)
+    """, height=50)
     
 # -------------------------
 # Optional disclaimer
