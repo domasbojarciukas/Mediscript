@@ -60,7 +60,10 @@ elif doc_type == "Kostengutsprache Medikament":
 
     st.markdown("### Angaben zur Kostengutsprache")
 
-    patient = st.text_input("Patient (Initialen oder ID)")
+    patient = st.text_input(
+    "Patient (optional – Initialen oder interne ID)",
+    placeholder="z.B. M.K. oder Fall-ID"
+)
 
     diagnosis = st.text_area(
         "Diagnose / Krankheitsbild *",
