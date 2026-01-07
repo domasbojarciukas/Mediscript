@@ -57,9 +57,97 @@ elif doc_type == "Ambulanter Verlaufsbericht":
     user_input = f"Patient: {patient}\nVerlauf: {verlauf}\nNeue Befunde: {neue_befunde}\nBeurteilung: {beurteilung}\nTherapie: {therapie}"
 
 elif doc_type == "Kostengutsprache Medikament":
-    med = st.text_input("Medikament / Indikation")
-    patient = st.text_input("Patient")
-    user_input = f"Medikament: {med}\nPatient: {patient}"
+
+    st.markdown("### Angaben zur Kostengutsprache")
+
+    patient = st.text_input("Patient (Initialen oder ID)")
+
+    diagnosis = st.text_area(
+        "Diagnose / Krankheitsbild *",
+        placeholder="z.B. Rheumatoide Arthritis mit hoher Krankheitsaktivität"
+    )
+
+    indication = st.text_area(
+        "Indikation für beantragte Therapie *",
+        placeholder="Warum ist dieses Medikament medizinisch indiziert?"
+    )
+
+    prior_therapy = st.text_area(
+        "Bisherige Therapien *",
+        placeholder="Medikament – Dauer – Wirkung / Nebenwirkungen"
+    )
+
+    therapy_failure = st.text_area(
+        "Grund für Therapieversagen / Nicht-Eignung *",
+        placeholder="Unwirksamkeit, Nebenwirkungen, Kontraindikationen"
+    )
+
+    med = st.text_input(
+        "Beantragtes Medikament *",
+        placeholder="z.B. Actemra® (Tocilizumab)"
+    )
+
+    dosage = st.text_input(
+        "Dosierung / Therapiedauer",
+        placeholder="z.B. 8 mg/kg i.v. alle 4 Wochen"
+    )
+
+    justification = st.text_area(
+        "Medizinische Begründung *",
+        placeholder="Warum ist diese Therapie notwendig und alternativlos?"
+    )
+
+    risk = st.text_area(
+        "Risiken bei Nichtbewilligung *",
+        placeholder="z.B. Progression, irreversible Schäden"
+    )
+
+    # Optional but very useful
+    with st.expander("➕ Optionale Angaben"):
+        off_label = st.selectbox(
+            "Off-label / Art. 71 KVV relevant?",
+            ["Unklar", "Nein", "Ja"]
+        )
+
+        evidence = st.text_area(
+            "Leitlinien / Evidenz (optional)",
+            placeholder="Studien, Fachgesellschaften"
+        )
+
+    # Build structured prompt input
+    user_input = f"""
+Patient: {patient}
+
+Diagnose:
+{diagnosis}
+
+Indikation:
+{indication}
+
+Bisherige Therapien:
+{prior_therapy}
+
+Therapieversagen / Nicht-Eignung:
+{therapy_failure}
+
+Beantragtes Medikament:
+{med}
+
+Dosierung / Dauer:
+{dosage}
+
+Medizinische Begründung:
+{justification}
+
+Risiken bei Nichtbewilligung:
+{risk}
+
+Off-label / Art. 71 KVV:
+{off_label}
+
+Evidenz / Leitlinien:
+{evidence}
+"""
 
 elif doc_type == "Kostengutsprache Rehabilitation":
     rehab = st.text_input("Rehabilitationsmaßnahme")
