@@ -82,7 +82,6 @@ user_input = (
     f"Einschätzung: {einschätzung}\n"
     f"Therapeutisches Vorgehen: {therapeutisch}"
 )
-
 elif doc_type == "Ambulanter Verlaufsbericht":
     patient = st.text_input(
     "Patient",
