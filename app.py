@@ -35,26 +35,91 @@ doc_type = st.selectbox(
      "Stationärer Bericht")
 )
 
+st.caption(
+    "ℹ️ Unklare oder noch ausstehende Angaben können leer gelassen oder kurz beschrieben werden."
+)
+
 # -----------------------------
 # Input fields per document type
 # -----------------------------
 user_input = ""
 
 if doc_type == "Ambulanter Erstbericht":
-    z = st.text_input("Zuweisung (Wer, Datum, Anlass)")
-    vd = st.text_input("Klinische Verdachtsdiagnose")
-    befunde = st.text_area("Befunde (Labor, Bilder, Untersuchung)", height=120)
-    einschätzung = st.text_area("Klinische Einschätzung", height=120)
-    therapeutisch = st.text_area("Therapeutisches Vorgehen", height=100)
-    user_input = f"Zuweisung: {z}\nVerdachtsdiagnose: {vd}\nBefunde: {befunde}\nEinschätzung: {einschätzung}\nTherapeutisches Vorgehen: {therapeutisch}"
+    z = st.text_area(
+    "Zuweisung (Wer, Datum, Anlass)",
+    placeholder="z.B. Hausarzt / Notfall / Selbstzuweisung; Datum; Anlass der Vorstellung",
+    height=80
+)
+
+vd = st.text_area(
+    "Klinische Verdachtsdiagnose",
+    placeholder="Falls unklar: Leitsymptom(e), Arbeitsdiagnose, DD",
+    height=80
+)
+
+befunde = st.text_area(
+    "Befunde (Labor, Bilder, Untersuchung)",
+    placeholder="Klinischer Status; relevante Laborwerte; Bildgebung (inkl. Datum)",
+    height=120
+)
+
+einschätzung = st.text_area(
+    "Klinische Einschätzung",
+    placeholder="Zusammenfassende Beurteilung, Risikoeinschätzung, Verlauf",
+    height=120
+)
+
+therapeutisch = st.text_area(
+    "Therapeutisches Vorgehen",
+    placeholder="Medikamentös / nicht-medikamentös; begonnen / geplant",
+    height=100
+)
+
+user_input = (
+    f"Zuweisung: {z}\n"
+    f"Verdachtsdiagnose: {vd}\n"
+    f"Befunde: {befunde}\n"
+    f"Einschätzung: {einschätzung}\n"
+    f"Therapeutisches Vorgehen: {therapeutisch}"
+)
 
 elif doc_type == "Ambulanter Verlaufsbericht":
-    patient = st.text_input("Patient")
-    verlauf = st.text_area("Verlauf seit letzter Konsultation", height=120)
-    neue_befunde = st.text_area("Neue Befunde", height=120)
-    beurteilung = st.text_area("Beurteilung", height=120)
-    therapie = st.text_area("Therapie / Weiteres Vorgehen", height=100)
-    user_input = f"Patient: {patient}\nVerlauf: {verlauf}\nNeue Befunde: {neue_befunde}\nBeurteilung: {beurteilung}\nTherapie: {therapie}"
+    patient = st.text_input(
+    "Patient",
+    placeholder="Initialen / Fall-ID (keine Klarnamen erforderlich)"
+)
+
+verlauf = st.text_area(
+    "Verlauf seit letzter Konsultation",
+    placeholder="Subjektiver Verlauf, neue Symptome, Besserung / Verschlechterung",
+    height=120
+)
+
+neue_befunde = st.text_area(
+    "Neue Befunde",
+    placeholder="Neue Laborwerte, Bildgebung, klinische Untersuchungen seit letzter Konsultation",
+    height=120
+)
+
+beurteilung = st.text_area(
+    "Beurteilung",
+    placeholder="Zusammenfassende Einschätzung des aktuellen Zustands und Verlaufs",
+    height=120
+)
+
+therapie = st.text_area(
+    "Therapie / Weiteres Vorgehen",
+    placeholder="Therapieanpassungen, geplante Massnahmen, Verlaufskontrollen",
+    height=100
+)
+
+user_input = (
+    f"Patient: {patient}\n"
+    f"Verlauf: {verlauf}\n"
+    f"Neue Befunde: {neue_befunde}\n"
+    f"Beurteilung: {beurteilung}\n"
+    f"Therapie: {therapie}"
+)
 
 elif doc_type == "Kostengutsprache Medikament":
 
