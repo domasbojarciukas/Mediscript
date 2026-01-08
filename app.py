@@ -150,8 +150,9 @@ if doc_type == "Ambulanter Erstbericht":
     # -----------------------------
     # AI generation trigger (example)
     # -----------------------------
-    if st.button("Bericht generieren"):
-        bericht_text = "Hier würde der generierte Beurteilungstext erscheinen, basierend auf dem Eingabeformat und der Swiss-standard medical German Prompt."
+if st.button("Bericht generieren", key="erstbericht_button"):
+    if user_input.strip() != "":
+        bericht_text = "Hier würde der generierte Beurteilungstext erscheinen..."
         procedere_text = "Hier würden die Bullet-Points für Procedere erscheinen."
 
         st.subheader("Generierter Bericht (Beurteilung)")
