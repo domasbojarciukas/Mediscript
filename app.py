@@ -1,5 +1,6 @@
 import streamlit as st
 import streamlit.components.v1 as components
+import textwrap
 from openai import OpenAI
 
 # -----------------------------
@@ -171,8 +172,6 @@ elif doc_type == "Kostengutsprache Medikament":
         )
 
     # Build structured prompt input
-
-import textwrap
     
     user_input = textwrap.dedent(f"""
 Klinischer Kontext:
