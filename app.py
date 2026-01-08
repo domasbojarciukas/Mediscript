@@ -125,29 +125,16 @@ elif doc_type == "Kostengutsprache Medikament":
 
     st.markdown("### Angaben zur Kostengutsprache")
 
-    patient = st.text_input(
-    "Patient (optional – Initialen oder interne ID)",
-    placeholder="z.B. M.K. oder Fall-ID"
-)
-
-    diagnosis = st.text_area(
-        "Diagnose / Krankheitsbild *",
-        placeholder="z.B. Rheumatoide Arthritis mit hoher Krankheitsaktivität"
+    context = st.text_area(
+    "Klinischer Kontext *",
+    placeholder="z.B. 72-jährige Patientin mit manifester Osteoporose und multiplen Fragilitätsfrakturen ohne adäquates Ansprechen auf antiresorptive Therapie",
+    height=90
     )
 
-    indication = st.text_area(
-        "Indikation für beantragte Therapie *",
-        placeholder="Warum ist dieses Medikament medizinisch indiziert?"
-    )
-
-    prior_therapy = st.text_area(
-        "Bisherige Therapien *",
-        placeholder="Medikament – Dauer – Wirkung / Nebenwirkungen"
-    )
-
-    therapy_failure = st.text_area(
-        "Grund für Therapieversagen / Nicht-Eignung *",
-        placeholder="Unwirksamkeit, Nebenwirkungen, Kontraindikationen"
+    prior = st.text_area(
+    "Bisherige Therapien und Limitationen *",
+    placeholder="z.B. MTX und Salazopyrin wegen Nebenwirkungen abgesetzt; Steroide nicht langfristig vertretbar",
+    height=100
     )
 
     med = st.text_input(
@@ -155,19 +142,20 @@ elif doc_type == "Kostengutsprache Medikament":
         placeholder="z.B. Actemra® (Tocilizumab)"
     )
 
+    indication = st.text_area(
+        "Indikation für beantragte Therapie *",
+        placeholder="Warum ist dieses Medikament medizinisch indiziert?"
+    )
+    
     dosage = st.text_input(
         "Dosierung / Therapiedauer",
         placeholder="z.B. 8 mg/kg i.v. alle 4 Wochen"
     )
 
     justification = st.text_area(
-        "Medizinische Begründung *",
-        placeholder="Warum ist diese Therapie notwendig und alternativlos?"
-    )
-
-    risk = st.text_area(
-        "Risiken bei Nichtbewilligung *",
-        placeholder="z.B. Progression, irreversible Schäden"
+    "Medizinische Begründung und Risiko bei Nichtbewilligung *",
+    placeholder="z.B. hohes Frakturrisiko, Progression, irreversible Schäden, fehlende Therapiealternativen",
+    height=110
     )
 
     # Optional but very useful
