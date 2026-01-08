@@ -69,107 +69,96 @@ Reflexe: physiologisch, keine pathologischen Babinski- oder Hoffmann-Zeichen. Ko
 }
 
 # -----------------------------
-# Streamlit UI
+# Streamlit UI Inputs
 # -----------------------------
-st.title("Ambulanter Erstbericht Generator")
+st.title("Ambulanter Bericht Generator")
 
-# User inputs
-z = st.text_area(
-    "Zuweisung (Wer, Datum, Anlass)",
-    placeholder="z.B. Hausarzt / Notfall / Selbstzuweisung; Datum; Anlass der Vorstellung",
-    height=80
-)
+if doc_type == "Ambulanter Erstbericht":
+    z = st.text_area(
+        "Zuweisung (Wer, Datum, Anlass)",
+        placeholder="z.B. Hausarzt / Notfall / Selbstzuweisung; Datum; Anlass der Vorstellung",
+        height=80
+    )
 
-jetzige_leiden = st.text_area(
-    "Jetzige Leiden (Stichworte, Symptome)",
-    placeholder="- Schulterschmerzen bds\n- Beckengürtelschmerzen\n- Morgensteifigkeit ca. 60 Minuten\n- Keine Fieber",
-    height=120
-)
+    jetzige_leiden = st.text_area(
+        "Jetzige Leiden (Stichworte, Symptome)",
+        placeholder="- Schulterschmerzen bds\n- Beckengürtelschmerzen\n- Morgensteifigkeit ca. 60 Minuten\n- Keine Fieber",
+        height=120
+    )
 
-anamnesis = st.text_area(
-    "Anamnese (chronologisch, fragmentiert)",
-    placeholder="09/2024: Erstmaliges Auftreten der Beschwerden\n09/2024: Rasche Besserung unter Prednison 25 mg\nNach Tapern Rezidiv der Schmerzen\n07/2025: Beginn MTX, gut verträglich",
-    height=140
-)
+    anamnesis = st.text_area(
+        "Anamnese (chronologisch, fragmentiert)",
+        placeholder="09/2024: Erstmaliges Auftreten der Beschwerden\n09/2024: Rasche Besserung unter Prednison 25 mg\nNach Tapern Rezidiv der Schmerzen\n07/2025: Beginn MTX, gut verträglich",
+        height=140
+    )
 
-# Dropdown for Status selection
-selected_status = st.selectbox(
-    "Status wählen (optional für automatisches Ausfüllen)",
-    [""] + list(STATUS_TEMPLATES.keys())
-)
+    selected_status = st.selectbox(
+        "Status wählen (optional für automatisches Ausfüllen)",
+        [""] + list(STATUS_TEMPLATES.keys())
+    )
 
-# Status text area, prefilled if a template is chosen
-status_text = st.text_area(
-    "Status",
-    value=STATUS_TEMPLATES.get(selected_status, ""),
-    height=200
-)
+    status_text = st.text_area(
+        "Status",
+        value=STATUS_TEMPLATES.get(selected_status, ""),
+        height=200
+    )
 
-vd = st.text_area(
-    "Klinische Verdachtsdiagnose",
-    placeholder="Falls unklar: Leitsymptom(e), Arbeitsdiagnose, DD",
-    height=80
-)
+    vd = st.text_area(
+        "Klinische Verdachtsdiagnose",
+        placeholder="Falls unklar: Leitsymptom(e), Arbeitsdiagnose, DD",
+        height=80
+    )
 
-befunde = st.text_area(
-    "Befunde (Labor, Bilder, Untersuchung)",
-    placeholder="Klinischer Status; relevante Laborwerte; Bildgebung (inkl. Datum)",
-    height=120
-)
+    befunde = st.text_area(
+        "Befunde (Labor, Bilder, Untersuchung)",
+        placeholder="Klinischer Status; relevante Laborwerte; Bildgebung (inkl. Datum)",
+        height=120
+    )
 
-einschätzung = st.text_area(
-    "Klinische Einschätzung",
-    placeholder="Zusammenfassende Beurteilung, Risikoeinschätzung, Verlauf",
-    height=120
-)
+    einschätzung = st.text_area(
+        "Klinische Einschätzung",
+        placeholder="Zusammenfassende Beurteilung, Risikoeinschätzung, Verlauf",
+        height=120
+    )
 
-therapeutisch = st.text_area(
-    "Therapeutisches Vorgehen",
-    placeholder="Medikamentös / nicht-medikamentös; begonnen / geplant",
-    height=100
-)
+    therapeutisch = st.text_area(
+        "Therapeutisches Vorgehen",
+        placeholder="Medikamentös / nicht-medikamentös; begonnen / geplant",
+        height=100
+    )
 
-# Assemble structured input for AI
-user_input = (
-    f"Zuweisung: {z}\n"
-    f"Jetzige Leiden: {jetzige_leiden}\n"
-    f"Anamnese: {anamnesis}\n"
-    f"Status: {status_text}\n"
-    f"Verdachtsdiagnose: {vd}\n"
-    f"Befunde: {befunde}\n"
-    f"Einschätzung: {einschätzung}\n"
-    f"Therapeutisches Vorgehen: {therapeutisch}"
-)
+    # Assemble structured input for AI
+    user_input = (
+        f"Jetzige Leiden:\n{jetzige_leiden}\n\n"
+        f"Anamnese:\n{anamnesis}\n\n"
+        f"Status:\n{status_text}\n\n"
+        f"Zuweisung:\n{z}\n\n"
+        f"Verdachtsdiagnose:\n{vd}\n\n"
+        f"Befunde:\n{befunde}\n\n"
+        f"Einschätzung:\n{einschätzung}\n\n"
+        f"Therapeutisches Vorgehen:\n{therapeutisch}"
+    )
 
-st.write("---")
-st.subheader("Strukturierte Input-Vorschau")
-st.markdown(f"**Jetzige Leiden:**\n{jetzige_leiden}\n\n"
-            f"**Anamnese:**\n{anamnesis}\n\n"
-            f"**Status:**\n{status_text}\n")
+    st.write("---")
+    st.subheader("Strukturierte Input-Vorschau")
+    st.markdown(
+        f"**Jetzige Leiden:**\n{jetzige_leiden}\n\n"
+        f"**Anamnese:**\n{anamnesis}\n\n"
+        f"**Status:**\n{status_text}\n"
+    )
 
-# -----------------------------
-# AI generation trigger (example)
-# -----------------------------
-if st.button("Bericht generieren"):
-    # Here you would call your AI model with the super prompt including `user_input`
-    # Example:
-    # response = openai.ChatCompletion.create(
-    #     model="gpt-5-mini",
-    #     messages=[
-    #         {"role": "system", "content": SUPER_PROMPT},
-    #         {"role": "user", "content": user_input}
-    #     ]
-    # )
-    # bericht_text = response['choices'][0]['message']['content']
+    # -----------------------------
+    # AI generation trigger (example)
+    # -----------------------------
+    if st.button("Bericht generieren"):
+        bericht_text = "Hier würde der generierte Beurteilungstext erscheinen, basierend auf dem Eingabeformat und der Swiss-standard medical German Prompt."
+        procedere_text = "Hier würden die Bullet-Points für Procedere erscheinen."
 
-    bericht_text = "Hier würde der generierte Beurteilungstext erscheinen, basierend auf dem Eingabeformat und der Swiss-standard medical German Prompt."
-    procedere_text = "Hier würden die Bullet-Points für Procedere erscheinen."
+        st.subheader("Generierter Bericht (Beurteilung)")
+        st.write(bericht_text)
 
-    st.subheader("Generierter Bericht (Beurteilung)")
-    st.write(bericht_text)
-
-    st.subheader("Procedere")
-    st.write(procedere_text)
+        st.subheader("Procedere")
+        st.write(procedere_text)
 
 elif doc_type == "Ambulanter Verlaufsbericht":
     patient = st.text_input(
