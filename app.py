@@ -1,3 +1,4 @@
+import time
 import streamlit as st
 import streamlit.components.v1 as components
 import textwrap
@@ -217,6 +218,7 @@ elif doc_type == "Stationärer Bericht":
 
 if st.button("Bericht generieren") and user_input.strip() != "":
     with st.spinner("Bericht wird generiert… Bitte warten."):
+        start_time = time.time()  # START TIMER
         prompt_key = {
             "Ambulanter Erstbericht": "ERSTBERICHT_PROMPT",
             "Ambulanter Verlaufsbericht": "VERLAUF_PROMPT",
@@ -238,6 +240,8 @@ if st.button("Bericht generieren") and user_input.strip() != "":
 
          # Save report to session state
         st.session_state.generated_text = response.choices[0].message.content
+        elapsed = time.time() - start_time  # END TIMER
+        st.session_state.elapsed_time = elapsed
 
 # Show report if generated
 if "generated_text" in st.session_state:
