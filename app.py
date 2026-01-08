@@ -85,8 +85,8 @@ if doc_type == "Ambulanter Erstbericht":
 
 elif doc_type == "Ambulanter Verlaufsbericht":
     patient = st.text_input(
-        "Patient",
-        placeholder="Initialen / Fall-ID (keine Klarnamen erforderlich)"
+        "Patientinfo",
+        placeholder="z.B. 55-jährige Patientin mit lumbalen Schmerzen, Erstvorstellung am 06.11.2025"
     )
 
     verlauf = st.text_area(
