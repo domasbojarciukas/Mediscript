@@ -171,6 +171,8 @@ elif doc_type == "Kostengutsprache Medikament":
         )
 
     # Build structured prompt input
+
+import textwrap
     
     user_input = textwrap.dedent(f"""
 Klinischer Kontext:
