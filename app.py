@@ -53,6 +53,24 @@ if doc_type == "Ambulanter Erstbericht":
         height=80
     )
 
+    jetzige_leiden = st.text_area(
+        "Jetzige Leiden (Stichworte, Symptome)",
+        placeholder="- Schulterschmerzen bds\n- Beckengürtelschmerzen\n- Morgensteifigkeit ca. 60 Minuten\n- Keine Fieber",
+        height=120
+    )
+
+    anamnesis = st.text_area(
+        "Anamnese (chronologisch, fragmentiert)",
+        placeholder="09/2024: Erstmaliges Auftreten der Beschwerden\n09/2024: Rasche Besserung unter Prednison 25 mg\nNach Tapern Rezidiv der Schmerzen\n07/2025: Beginn MTX, gut verträglich",
+        height=140
+    )
+
+    status = st.text_area(
+        "Status (fokussiert, nur falls relevant)",
+        placeholder="Schultergürtel bds druckdolent, aktive Beweglichkeit schmerzbedingt eingeschränkt.\nKeine peripheren Synovitiden.",
+        height=120
+    )
+    
     vd = st.text_area(
         "Klinische Verdachtsdiagnose",
         placeholder="Falls unklar: Leitsymptom(e), Arbeitsdiagnose, DD",
@@ -79,6 +97,9 @@ if doc_type == "Ambulanter Erstbericht":
 
     user_input = (
         f"Zuweisung: {z}\n"
+        f"Jetzige Leiden: {jetzige_leiden}\n"
+        f"Anamnese: {anamnesis}\n"
+        f"Status: {status}\n"
         f"Verdachtsdiagnose: {vd}\n"
         f"Befunde: {befunde}\n"
         f"Einschätzung: {einschätzung}\n"
