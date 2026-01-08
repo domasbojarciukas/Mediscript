@@ -171,32 +171,25 @@ elif doc_type == "Kostengutsprache Medikament":
         )
 
     # Build structured prompt input
+    
     user_input = f"""
-Patient: {patient}
+Klinischer Kontext:
+{context}
 
-Diagnose:
-{diagnosis}
-
-Indikation:
-{indication}
-
-Bisherige Therapien:
-{prior_therapy}
-
-Therapieversagen / Nicht-Eignung:
-{therapy_failure}
+Bisherige Therapien / Limitationen:
+{prior}
 
 Beantragtes Medikament:
 {med}
 
+Indikation:
+{indication}
+
 Dosierung / Dauer:
 {dosage}
 
-Medizinische Begründung:
+Begründung und Risiken:
 {justification}
-
-Risiken bei Nichtbewilligung:
-{risk}
 
 Off-label / Art. 71 KVV:
 {off_label}
