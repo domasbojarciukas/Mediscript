@@ -41,10 +41,36 @@ st.caption(
     "ℹ️ Unklare oder noch ausstehende Angaben können leer gelassen oder kurz beschrieben werden."
 )
 
-# -----------------------------
-# Input fields per document type
-# -----------------------------
-user_input = ""
+# Status templates
+STATUS_TEMPLATES = {
+    "LWS": """Allgemein: Patient wach, orientiert. Haltung und Gang normal.  
+Inspektion: Keine sichtbare Fehlstellung. Palpation: Paravertebrale Druckdolenz vorhanden, Druckdolenz an Processi spinosi.  
+Bewegung: Flexion/Extension normal, Seitneigung normal. Lasègue-Test negativ, Quadrantentest unauffällig, 3-Phasentest unauffällig, Viererzeichen physiologisch. Keine neurologischen Ausfälle.""",
+
+    "HWS": """Allgemein: Patient wach, orientiert. Haltung normal.  
+Inspektion: Keine Fehlstellung oder Schwellung. Palpation: Paravertebrale Muskelspannung normal, Druckdolenz nur minimal.  
+Bewegung: Flexion, Extension, Lateralflexion und Rotation unauffällig. Keine neurologischen Auffälligkeiten.""",
+
+    "Schulter": """Allgemein: Patient wach, orientiert. Schulterbeweglichkeit symmetrisch.  
+Inspektion: Keine Schwellung, Rötung oder Atrophie. Palpation: keine Druckdolenz.  
+Bewegung: Abduktion, Anteversion, Retroversion, Innen- und Außenrotation physiologisch. Kraftprüfung normal. Keine neurologischen Auffälligkeiten.""",
+
+    "Knie": """Allgemein: Patient wach, orientiert. Kniebeweglichkeit symmetrisch.  
+Inspektion: Keine Schwellung, Rötung oder Deformität. Palpation: keine Druckdolenz, keine Gelenkergüsse.  
+Bewegung: Flexion und Extension physiologisch. Stabilitätstest (vordere/posterior Kreuzbänder, Seitenbänder) unauffällig. Keine neurologischen Auffälligkeiten.""",
+
+    "Hand": """Allgemein: Patient wach, orientiert. Hände normal gelagert.  
+Inspektion: Keine Deformitäten, Rötungen oder Schwellungen. Palpation: keine Druckdolenz an Gelenken oder Sehnen.  
+Bewegung: Daumen, Fingerbeweglichkeit und Greiffunktion unauffällig. Sensibilität und Kraft normal.""",
+
+    "Internistisch": """Allgemeinzustand: Wach, orientiert, kein akuter Leidensdruck. Hautfarbe normal, keine Zyanose oder Ikterus. Atemwege frei, Atmung ruhig und regelmässig.  
+Herz: rhythmisch, keine Extrasystolen, keine Herzgeräusche. Kreislauf: Blutdruck und Puls physiologisch, keine peripheren Ödeme.  
+Abdomen: weich, nicht druckschmerzhaft, keine Resistenzen oder Organvergrößerungen palpabel. Leber- und Milzrand nicht tastbar. Keine Lymphadenopathie. Keine Zeichen für akute Infektion.""",
+
+    "Neuro": """Bewusstsein und Orientierung: wach, klar, orientiert zu Person, Ort und Zeit. Sprache und Sprachexpression unauffällig.  
+Motorik: Kraft symmetrisch in allen Extremitäten, kein Paresen. Sensibilität: Berührung, Schmerz, Vibration, Temperatur physiologisch.  
+Reflexe: physiologisch, keine pathologischen Babinski- oder Hoffmann-Zeichen. Koordination: Finger-Nase-Test, Knie-Hacke-Test unauffällig. Gang: stabil, ohne Ataxie. Keine Auffälligkeiten im Hirnnervenstatus."""
+}
 
 if doc_type == "Ambulanter Erstbericht":
     z = st.text_area(
@@ -65,12 +91,19 @@ if doc_type == "Ambulanter Erstbericht":
         height=140
     )
 
-    status = st.text_area(
-        "Status (fokussiert, nur falls relevant)",
-        placeholder="Schultergürtel bds druckdolent, aktive Beweglichkeit schmerzbedingt eingeschränkt.\nKeine peripheren Synovitiden.",
-        height=120
+    # Dropdown for Status selection
+    selected_status = st.selectbox(
+        "Status wählen (optional für automatisches Ausfüllen)",
+        [""] + list(STATUS_TEMPLATES.keys())
     )
-    
+
+    # Status text area, prefilled if a template is chosen
+    status_text = st.text_area(
+        "Status",
+        value=STATUS_TEMPLATES.get(selected_status, ""),
+        height=200
+    )
+
     vd = st.text_area(
         "Klinische Verdachtsdiagnose",
         placeholder="Falls unklar: Leitsymptom(e), Arbeitsdiagnose, DD",
@@ -95,16 +128,19 @@ if doc_type == "Ambulanter Erstbericht":
         height=100
     )
 
+    # Build the AI prompt input
     user_input = (
         f"Zuweisung: {z}\n"
         f"Jetzige Leiden: {jetzige_leiden}\n"
         f"Anamnese: {anamnesis}\n"
-        f"Status: {status}\n"
+        f"Status: {status_text}\n"
         f"Verdachtsdiagnose: {vd}\n"
         f"Befunde: {befunde}\n"
         f"Einschätzung: {einschätzung}\n"
         f"Therapeutisches Vorgehen: {therapeutisch}"
     )
+
+    st.code(user_input)
 
 elif doc_type == "Ambulanter Verlaufsbericht":
     patient = st.text_input(
