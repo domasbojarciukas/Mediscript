@@ -273,7 +273,10 @@ if "generated_text" in st.session_state:
             Bericht kopieren
         </button>
     """, height=40)
-    
+
+# Show elapsed time
+    st.info(f"⏱️ Bericht generiert in {st.session_state.elapsed_time:.2f} Sekunden")
+
 # -------------------------
 # Optional disclaimer
 # -------------------------
