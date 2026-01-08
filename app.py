@@ -172,7 +172,7 @@ elif doc_type == "Kostengutsprache Medikament":
 
     # Build structured prompt input
     
-    user_input = f"""
+    user_input = textwrap.dedent(f"""
 Klinischer Kontext:
 {context}
 
@@ -196,7 +196,7 @@ Off-label / Art. 71 KVV:
 
 Evidenz / Leitlinien:
 {evidence}
-"""
+""").strip()
 
 elif doc_type == "Kostengutsprache Rehabilitation":
     rehab = st.text_input("Rehabilitationsmaßnahme")
