@@ -12,11 +12,23 @@ from email.mime.text import MIMEText
 st.set_page_config(page_title="Mediscript", layout="centered")
 st.markdown("""
 <style>
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-header {visibility: hidden;}
+/* Hide collapse button */
+button[data-testid="collapsedControl"] {
+    display: none;
+}
+
+/* Force sidebar always visible */
+section[data-testid="stSidebar"] {
+    min-width: 300px;
+    max-width: 300px;
+    transform: none !important;
+}
+
+/* Prevent main content from shifting */
+div[data-testid="stSidebar"][aria-expanded="false"] {
+    transform: none !important;
+}
 </style>
-""", unsafe_allow_html=True)
 
 # -----------------------------
 # Feedback email function
