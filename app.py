@@ -3,6 +3,8 @@ import streamlit as st
 import streamlit.components.v1 as components
 import textwrap
 from openai import OpenAI
+import smtplib
+from email.mime.text import MIMEText
 
 # -----------------------------
 # Page config + hide header/footer
@@ -15,6 +17,23 @@ footer {visibility: hidden;}
 header {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
+
+# -----------------------------
+# Feedback email function
+# -----------------------------
+def send_feedback_email(message: str):
+    msg = MIMEText(message, "plain", "utf-8")
+    msg["Subject"] = "💬 Mediscript – Neues Feedback"
+    msg["From"] = st.secrets["FEEDBACK_EMAIL_FROM"]
+    msg["To"] = st.secrets["FEEDBACK_EMAIL_TO"]
+
+    with smtplib.SMTP(st.secrets["SMTP_SERVER"], st.secrets["SMTP_PORT"]) as server:
+        server.starttls()
+        server.login(
+            st.secrets["FEEDBACK_EMAIL_FROM"],
+            st.secrets["SMTP_PASSWORD"]
+        )
+        server.send_message(msg)
 
 st.title("Mediscript - Testphase")
 
@@ -341,34 +360,20 @@ st.caption(
 
 st.markdown("---")
 st.markdown(
-    "<div style='font-size:16px; font-weight:600; margin-bottom:4px;'>"
-    "💬 Feedback / Rückmeldung"
-    "</div>",
+    "<div style='font-size:15px; font-weight:600;'>💬 Feedback / Rückmeldung</div>",
     unsafe_allow_html=True
 )
 
-# --- initialize counter ---
-if "feedback_key" not in st.session_state:
-    st.session_state.feedback_key = 0
-
 feedback = st.text_area(
-    "Schreibe dein Feedback oder Anmerkungen hier",
-    placeholder="z.B. „Das Tool ist sehr hilfreich, aber der Status-Text könnte ausführlicher sein …“",
+    "Schreibe dein Feedback",
+    placeholder="z.B. 'Status könnte detaillierter sein…'",
     height=80,
-    key=f"feedback_{st.session_state.feedback_key}"
+    key="feedback_box"
 )
 
 if st.button("Feedback senden"):
     if feedback.strip():
-        with open("feedback.txt", "a", encoding="utf-8") as f:
-            f.write(
-                f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {feedback.strip()}\n"
-            )
-
+        send_feedback_email(feedback)
         st.success("Danke für dein Feedback! 🙏")
-
-        # 🔁 rotate key → creates a fresh text_area
-        st.session_state.feedback_key += 1
-
     else:
-        st.warning("Bitte zuerst etwas Feedback eingeben.")
+        st.warning("Bitte zuerst Feedback eingeben.")
