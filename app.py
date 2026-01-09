@@ -159,9 +159,7 @@ if doc_type in ["Ambulanter Erstbericht", "Ambulanter Verlaufsbericht", "Station
 # Kostengutsprache tabs
 # -----------------------------
 elif doc_type == "Kostengutsprache Medikament":
-    tabs = st.tabs(["Medikament", "Rehabilitation"])
-
-    with tabs[0]:
+    
         context = st.text_area(
             "Klinischer Kontext *",
             placeholder="z.B. 72-jährige Patientin mit manifester Osteoporose und multiplen Fragilitätsfrakturen",
@@ -208,13 +206,8 @@ elif doc_type == "Kostengutsprache Medikament":
         {evidence}
         """).strip()
 
-    with tabs[1]:
-        rehab = st.text_input("Rehabilitationsmaßnahme", placeholder="z.B. Physikalische Therapie 3x pro Woche")
-        patient_reha = st.text_input("Patient", placeholder="z.B. 55-jährige Patientin")
-        user_input += f"\nRehabilitation: {rehab}\nPatient: {patient_reha}"
-
 elif doc_type == "Kostengutsprache Rehabilitation":
-    rehab = st.text_input("Rehabilitationsmaßnahme", placeholder="z.B. Physikalische Therapie 3x pro Woche")
+    rehab = st.text_input("Rehabilitationsmassnahme", placeholder="z.B. Physikalische Therapie 3x pro Woche")
     patient_reha = st.text_input("Patient", placeholder="z.B. 55-jährige Patientin")
     user_input = f"Rehabilitation: {rehab}\nPatient: {patient_reha}"
 
