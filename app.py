@@ -1,4 +1,4 @@
-import time
+cimport time
 import streamlit as st
 import streamlit.components.v1 as components
 import textwrap
@@ -45,13 +45,20 @@ client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 # -----------------------------
 # Sidebar: Document type
 # -----------------------------
-doc_type = st.sidebar.radio(
-    "Dokumenttyp auswählen",
-    ("Ambulanter Erstbericht", "Ambulanter Verlaufsbericht",
-     "Kostengutsprache Medikament", "Kostengutsprache Rehabilitation",
-     "Stationärer Bericht"),
-    index=0
-)
+
+col1, col2 = st.columns([2, 10])  # 2 = sidebar width, 10 = main content
+
+with col1:
+    doc_type = st.radio(
+        "Dokumenttyp auswählen",
+        ["Ambulanter Erstbericht", "Ambulanter Verlaufsbericht",
+         "Kostengutsprache Medikament", "Kostengutsprache Rehabilitation",
+         "Stationärer Bericht"],
+        index=0
+    )
+
+with col2:
+    st.write(f"Du hast ausgewählt: {doc_type}")
 
 st.caption("ℹ️ Unklare oder noch ausstehende Angaben können leer gelassen oder kurz beschrieben werden.")
 
