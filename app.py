@@ -347,18 +347,29 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# --- session state init ---
+if "feedback_sent" not in st.session_state:
+    st.session_state.feedback_sent = False
+
 feedback = st.text_area(
     "Schreibe dein Feedback oder Anmerkungen hier",
-    placeholder="z.B. 'Das Tool ist sehr hilfreich, aber Status-Text könnte länger sein…'",
+    key="feedback_text",
+    placeholder="z.B. „Das Tool ist sehr hilfreich, aber der Status-Text könnte ausführlicher sein …“",
     height=80
 )
 
 if st.button("Feedback senden"):
     if feedback.strip():
-        # Example: save feedback to a local file (or replace with DB / Google Sheet)
         with open("feedback.txt", "a", encoding="utf-8") as f:
-            f.write(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {feedback}\n")
-        st.success("Danke für dein Feedback! 🙏")
-        st.rerun()  # Optional: clear text area after send
+            f.write(
+                f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {feedback.strip()}\n"
+            )
+
+        st.session_state.feedback_sent = True
+        st.session_state.feedback_text = ""  # clears textarea
     else:
         st.warning("Bitte zuerst etwas Feedback eingeben.")
+
+# --- success message persists ---
+if st.session_state.feedback_sent:
+    st.success("Danke für dein Feedback! 🙏")
