@@ -35,6 +35,8 @@ def send_feedback_email(message: str):
         )
         server.send_message(msg)
 
+st.title("Mediscript - Testphase")
+
 # -----------------------------
 # OpenAI client
 # -----------------------------
@@ -44,131 +46,138 @@ client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 # Status templates
 # -----------------------------
 STATUS_TEMPLATES = {
-    "LWS": "Allgemein: Patient wach, orientiert. Haltung und Gang normal. Einbeinstand unauffälig.\nInspektion: Keine sichtbare Fehlstellung. Palpation: keine Druckdolenz.\nBewegung: Flexion/Extension normal. Lasègue-Test negativ.",
-    "HWS": "Allgemein: Patient wach, orientiert. Haltung normal.\nInspektion: Keine Fehlstellung. Palpation normal.\nBewegung: Flexion, Extension, Lateralflexion und Rotation unauffällig.",
-    "Schulter": "Allgemein: Patient wach, orientiert. Schulterbeweglichkeit symmetrisch.\nInspektion: Keine Schwellung oder Rötung.\nPalpation: keine Druckdolenz.\nBewegung: physiologisch. Kraftprüfung normal.",
-    "Knie": "Allgemein: Patient wach, orientiert. Kniebeweglichkeit symmetrisch.\nInspektion: Keine Schwellung.\nBewegung: Flexion und Extension physiologisch. Stabilitätstest unauffällig.",
-    "Hüfte": "Rotationsprüfung: AR/IR schmerzfrei, Drehmanzeichen negativ, kein axialer Stauchungsschmerz.",
-    "Hand": "Allgemein: Patient wach, orientiert. Hände normal gelagert.\nInspektion: Keine Deformitäten. Palpation: keine Druckdolenz.\nBewegung: physiologisch.",
-    "Internistisch": "Allgemeinzustand: Wach, orientiert, kein akuter Leidensdruck.\nHerz: rhythmisch, keine Extrasystolen.\nAbdomen: weich, nicht druckschmerzhaft.",
-    "Neuro": "Bewusstsein und Orientierung: wach, klar, orientiert.\nMotorik: Kraft symmetrisch, kein Paresen.\nReflexe: physiologisch."
+    "LWS": "Allgemein: Patient wach, orientiert. Haltung und Gang normal.\nInspektion: ...",
+    "HWS": "Allgemein: Patient wach, orientiert. Haltung normal.\nInspektion: ...",
+    "Schulter": "Allgemein: Patient wach, orientiert. Schulterbeweglichkeit symmetrisch.\nInspektion: ...",
+    "Knie": "Allgemein: Patient wach, orientiert. Kniebeweglichkeit symmetrisch.\nInspektion: ...",
+    "Hand": "Allgemein: Patient wach, orientiert. Hände normal gelagert.\nInspektion: ...",
+    "Internistisch": "Allgemeinzustand: Wach, orientiert, kein akuter Leidensdruck.\nHerz: ...",
+    "Neuro": "Bewusstsein und Orientierung: wach, klar, orientiert.\nMotorik: ...",
 }
 
 # -----------------------------
-# Page title
+# Sidebar sections as tabs
 # -----------------------------
-st.title("Mediscript - Testphase")
-st.caption("ℹ️ Unklare oder ausstehende Angaben können leer gelassen werden.")
-
-# -----------------------------
-# Select document type
-# -----------------------------
-doc_type = st.selectbox(
-    "Dokumenttyp auswählen",
-    ("Ambulanter Erstbericht", "Ambulanter Verlaufsbericht",
-     "Kostengutsprache Medikament", "Kostengutsprache Rehabilitation",
-     "Stationärer Bericht")
+section = st.sidebar.radio(
+    "Abschnitt wählen",
+    ["Dokumenttyp", "Patientenangaben", "Leiden & Anamnese", "Status & Befunde", "Einschätzung & Therapie", "Generierung & Feedback"]
 )
 
-user_input = ""
+# -----------------------------
+# Store all inputs in session state
+# -----------------------------
+if "doc_type" not in st.session_state:
+    st.session_state.doc_type = "Ambulanter Erstbericht"
+
+if "feedback" not in st.session_state:
+    st.session_state.feedback = ""
 
 # -----------------------------
-# UI for Ambulanter Erstbericht
+# Section: Dokumenttyp auswählen
 # -----------------------------
-if doc_type == "Ambulanter Erstbericht":
-    st.markdown("### Patientendaten")
-    z = st.text_area("Zuweisung (Wer, Datum, Anlass)", placeholder="z.B. Hausarzt / Notfall / Selbstzuweisung; Datum; Anlass der Vorstellung", height=80)
-
-    col1, col2 = st.columns(2)
-    with col1:
-        jetzige_leiden = st.text_area("Jetzige Leiden", placeholder="- Schulterschmerzen bds\n- Beckengürtelschmerzen", height=120)
-        anamnesis = st.text_area("Anamnese", placeholder="Chronologische Beschwerden…", height=140)
-    with col2:
-        selected_status = st.selectbox("Status wählen (optional)", [""] + list(STATUS_TEMPLATES.keys()))
-        status_text = st.text_area("Status", value=STATUS_TEMPLATES.get(selected_status, ""), placeholder="Hier Status eintragen oder auswählen", height=200)
-
-    vd = st.text_area("Klinische Verdachtsdiagnose", placeholder="Leitsymptom(e), Arbeitsdiagnose, DD", height=80)
-    befunde = st.text_area("Befunde", placeholder="Laborwerte, Bildgebung, klinische Untersuchung", height=120)
-    einschätzung = st.text_area("Klinische Einschätzung", placeholder="Zusammenfassende Beurteilung, Risikoeinschätzung", height=120)
-    therapeutisch = st.text_area("Therapeutisches Vorgehen", placeholder="Medikamentös / nicht-medikamentös", height=100)
-
-    user_input = f"""Jetzige Leiden:\n{jetzige_leiden}\n\nAnamnese:\n{anamnesis}\n\nStatus:\n{status_text}\n\nZuweisung:\n{z}\n\nVerdachtsdiagnose:\n{vd}\n\nBefunde:\n{befunde}\n\nEinschätzung:\n{einschätzung}\n\nTherapeutisches Vorgehen:\n{therapeutisch}"""
+if section == "Dokumenttyp":
+    st.session_state.doc_type = st.selectbox(
+        "Dokumenttyp auswählen",
+        ("Ambulanter Erstbericht", "Ambulanter Verlaufsbericht",
+         "Kostengutsprache Medikament", "Kostengutsprache Rehabilitation",
+         "Stationärer Bericht"),
+        index=["Ambulanter Erstbericht", "Ambulanter Verlaufsbericht",
+               "Kostengutsprache Medikament", "Kostengutsprache Rehabilitation",
+               "Stationärer Bericht"].index(st.session_state.doc_type)
+    )
+    st.caption("ℹ️ Unklare oder ausstehende Angaben können leer gelassen werden.")
 
 # -----------------------------
-# AI generation button
+# Section: Patientenangaben
 # -----------------------------
-if st.button("Bericht generieren") and user_input.strip() != "":
-    with st.spinner("Bericht wird generiert…"):
-        start_time = time.time()
-        prompt_key = {
-            "Ambulanter Erstbericht": "ERSTBERICHT_PROMPT",
-            "Ambulanter Verlaufsbericht": "VERLAUF_PROMPT",
-            "Kostengutsprache Medikament": "KOSTENGUT_MED_PROMPT",
-            "Kostengutsprache Rehabilitation": "KOSTENGUT_REHA_PROMPT",
-            "Stationärer Bericht": "STATIONAER_PROMPT"
-        }[doc_type]
+if section == "Patientenangaben":
+    doc_type = st.session_state.doc_type
+    if doc_type in ["Ambulanter Erstbericht", "Ambulanter Verlaufsbericht"]:
+        st.session_state.patient = st.text_input("Patient", placeholder="z.B. 55-jährige Patientin")
+        st.session_state.zuweisung = st.text_area("Zuweisung (Wer, Datum, Anlass)", placeholder="z.B. Hausarzt / Notfall / Selbstzuweisung; Datum; Anlass der Vorstellung", height=80)
+    elif doc_type == "Kostengutsprache Medikament":
+        st.session_state.patient = st.text_input("Patient", placeholder="z.B. 72-jährige Patientin")
+    elif doc_type == "Kostengutsprache Rehabilitation":
+        st.session_state.patient = st.text_input("Patient", placeholder="z.B. 55-jährige Patientin")
+    elif doc_type == "Stationärer Bericht":
+        st.session_state.patient = st.text_input("Patient", placeholder="z.B. 72-jährige Patientin")
 
-        prompt_text = st.secrets[prompt_key]
-
-        response = client.chat.completions.create(
-            model="gpt-4.1",
-            messages=[
-                {"role": "system", "content": prompt_text},
-                {"role": "user", "content": user_input}
-            ],
-            temperature=0.3
+# -----------------------------
+# Section: Leiden & Anamnese
+# -----------------------------
+if section == "Leiden & Anamnese":
+    doc_type = st.session_state.doc_type
+    if doc_type == "Ambulanter Erstbericht":
+        st.session_state.jetzige_leiden = st.text_area(
+            "Jetzige Leiden", placeholder="- Schulterschmerzen bds\n- Beckengürtelschmerzen", height=120
+        )
+        st.session_state.anamnese = st.text_area(
+            "Anamnese", placeholder="09/2024: Erstmaliges Auftreten der Beschwerden", height=140
+        )
+    elif doc_type == "Ambulanter Verlaufsbericht":
+        st.session_state.verlauf = st.text_area(
+            "Verlauf seit letzter Konsultation", placeholder="Neue Symptome, Besserung / Verschlechterung", height=120
         )
 
-        st.session_state.generated_text = response.choices[0].message.content
-        st.session_state.elapsed_time = time.time() - start_time
+# -----------------------------
+# Section: Status & Befunde
+# -----------------------------
+if section == "Status & Befunde":
+    doc_type = st.session_state.doc_type
+    if doc_type == "Ambulanter Erstbericht":
+        selected_status = st.selectbox("Status wählen", [""] + list(STATUS_TEMPLATES.keys()))
+        st.session_state.status = st.text_area("Status", value=STATUS_TEMPLATES.get(selected_status, ""), placeholder="Hier wird Status angezeigt", height=200)
+        st.session_state.vd = st.text_area("Klinische Verdachtsdiagnose", placeholder="Leitsymptom(e), Arbeitsdiagnose, DD", height=80)
+        st.session_state.befunde = st.text_area("Befunde (Labor, Bilder, Untersuchung)", placeholder="Relevante Laborwerte, Bildgebung", height=120)
 
 # -----------------------------
-# Show generated report
+# Section: Einschätzung & Therapie
 # -----------------------------
-if "generated_text" in st.session_state:
-    st.markdown("### Generierter Bericht")
-    st.text_area(label="", value=st.session_state.generated_text, height=350)
-
-    safe_text = st.session_state.generated_text.replace("`","\\`").replace("\\","\\\\").replace("\n","\\n").replace('"','\\"')
-    primary_color = st.get_option("theme.primaryColor")
-
-    components.html(f"""
-        <button style="
-            padding: 0.45em 1em;
-            font-size: 1em;
-            font-weight: 600;
-            border-radius: 0.25em;
-            border: none;
-            background-color: {primary_color};
-            color: white;
-            cursor: pointer;
-        "
-        onclick="
-            const text = `{safe_text}`;
-            navigator.clipboard.writeText(text).then(() => {{
-                alert('Bericht in die Zwischenablage kopiert!');
-            }});">
-            Bericht kopieren
-        </button>
-    """, height=40)
-
-    st.info(f"⏱️ Bericht generiert in {st.session_state.elapsed_time:.2f} Sekunden")
+if section == "Einschätzung & Therapie":
+    doc_type = st.session_state.doc_type
+    if doc_type == "Ambulanter Erstbericht":
+        st.session_state.einschaetzung = st.text_area("Einschätzung", placeholder="Zusammenfassende Beurteilung", height=120)
+        st.session_state.therapie = st.text_area("Therapeutisches Vorgehen", placeholder="Medikamentös / nicht-medikamentös", height=100)
 
 # -----------------------------
-# Feedback section
+# Section: Generierung & Feedback
 # -----------------------------
-st.markdown("---")
-st.markdown("<div style='font-size:14px; font-weight:500;'>💬 Feedback / Rückmeldung</div>", unsafe_allow_html=True)
-feedback = st.text_area("Schreibe dein Feedback", placeholder="z.B. 'Status könnte detaillierter sein…'", height=80, key="feedback_box")
+if section == "Generierung & Feedback":
+    # Build user_input depending on doc type
+    doc_type = st.session_state.doc_type
+    user_input = ""
+    if doc_type == "Ambulanter Erstbericht":
+        user_input = f"""Jetzige Leiden:\n{st.session_state.get('jetzige_leiden','')}\n\nAnamnese:\n{st.session_state.get('anamnese','')}\n\nStatus:\n{st.session_state.get('status','')}\n\nZuweisung:\n{st.session_state.get('zuweisung','')}\n\nVerdachtsdiagnose:\n{st.session_state.get('vd','')}\n\nBefunde:\n{st.session_state.get('befunde','')}\n\nEinschätzung:\n{st.session_state.get('einschaetzung','')}\n\nTherapeutisches Vorgehen:\n{st.session_state.get('therapie','')}"""
 
-if st.button("Feedback senden"):
-    if feedback.strip():
-        send_feedback_email(feedback)
-        st.success("Danke für dein Feedback! 🙏")
-    else:
-        st.warning("Bitte zuerst Feedback eingeben.")
+    if st.button("Bericht generieren") and user_input.strip() != "":
+        with st.spinner("Bericht wird generiert…"):
+            prompt_key = {
+                "Ambulanter Erstbericht": "ERSTBERICHT_PROMPT",
+                "Ambulanter Verlaufsbericht": "VERLAUF_PROMPT",
+                "Kostengutsprache Medikament": "KOSTENGUT_MED_PROMPT",
+                "Kostengutsprache Rehabilitation": "KOSTENGUT_REHA_PROMPT",
+                "Stationärer Bericht": "STATIONAER_PROMPT"
+            }[doc_type]
+            prompt_text = st.secrets[prompt_key]
+            response = client.chat.completions.create(
+                model="gpt-4.1",
+                messages=[{"role": "system", "content": prompt_text},
+                          {"role": "user", "content": user_input}],
+                temperature=0.3
+            )
+            st.session_state.generated_text = response.choices[0].message.content
+            st.session_state.elapsed_time = time.time() - time.time()
 
-# -----------------------------
-# Disclaimer
-# -----------------------------
-st.caption("Dieses Tool dient der Unterstützung beim Verfassen medizinischer Texte. Die Verantwortung bleibt bei der behandelnden Ärztin / beim behandelnden Arzt.")
+    if "generated_text" in st.session_state:
+        st.subheader("Generierter Bericht")
+        st.text_area("", st.session_state.generated_text, height=350)
+
+    st.markdown("---")
+    st.markdown("<div style='font-size:15px; font-weight:600;'>💬 Feedback / Rückmeldung</div>", unsafe_allow_html=True)
+    st.session_state.feedback = st.text_area("Schreibe dein Feedback", placeholder="z.B. 'Status könnte detaillierter sein…'", height=80, key="feedback_box")
+    if st.button("Feedback senden"):
+        if st.session_state.feedback.strip():
+            send_feedback_email(st.session_state.feedback)
+            st.success("Danke für dein Feedback! 🙏")
+        else:
+            st.warning("Bitte zuerst Feedback eingeben.")
