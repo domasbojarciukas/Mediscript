@@ -347,7 +347,10 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# --- session state init ---
+# --- session state init (MUST be before widget) ---
+if "feedback_text" not in st.session_state:
+    st.session_state.feedback_text = ""
+
 if "feedback_sent" not in st.session_state:
     st.session_state.feedback_sent = False
 
@@ -359,17 +362,18 @@ feedback = st.text_area(
 )
 
 if st.button("Feedback senden"):
-    if feedback.strip():
+    if st.session_state.feedback_text.strip():
         with open("feedback.txt", "a", encoding="utf-8") as f:
             f.write(
-                f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {feedback.strip()}\n"
+                f"{time.strftime('%Y-%m-%d %H:%M:%S')} - "
+                f"{st.session_state.feedback_text.strip()}\n"
             )
 
+        # reset state SAFELY
+        st.session_state.feedback_text = ""
         st.session_state.feedback_sent = True
-        st.session_state.feedback_text = ""  # clears textarea
     else:
         st.warning("Bitte zuerst etwas Feedback eingeben.")
 
-# --- success message persists ---
 if st.session_state.feedback_sent:
     st.success("Danke für dein Feedback! 🙏")
