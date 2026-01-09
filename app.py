@@ -49,7 +49,8 @@ doc_type = st.sidebar.radio(
     "Dokumenttyp auswählen",
     ("Ambulanter Erstbericht", "Ambulanter Verlaufsbericht",
      "Kostengutsprache Medikament", "Kostengutsprache Rehabilitation",
-     "Stationärer Bericht")
+     "Stationärer Bericht"),
+    index=0
 )
 
 st.caption("ℹ️ Unklare oder noch ausstehende Angaben können leer gelassen oder kurz beschrieben werden.")
