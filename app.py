@@ -359,6 +359,6 @@ if st.button("Feedback senden"):
         with open("feedback.txt", "a", encoding="utf-8") as f:
             f.write(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {feedback}\n")
         st.success("Danke für dein Feedback! 🙏")
-        st.experimental_rerun()  # Optional: clear text area after send
+        st.rerun()  # Optional: clear text area after send
     else:
         st.warning("Bitte zuerst etwas Feedback eingeben.")
