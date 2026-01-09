@@ -141,10 +141,10 @@ if doc_type == "Ambulanter Erstbericht":
     st.write("---")
 
     with st.expander("Strukturierte Input-Vorschau (für Überprüfung)"):
-    st.markdown(
-        f"**Jetzige Leiden:**\n{jetzige_leiden}\n\n"
-        f"**Anamnese:**\n{anamnesis}\n\n"
-        f"**Status:**\n{status_text}\n"
+        st.markdown(
+            f"**Jetzige Leiden:**\n{jetzige_leiden}\n\n"
+            f"**Anamnese:**\n{anamnesis}\n\n"
+            f"**Status:**\n{status_text}\n"
     )
     
     st.subheader("Strukturierte Input-Vorschau")
