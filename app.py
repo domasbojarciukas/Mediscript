@@ -41,24 +41,24 @@ st.caption(
 # Status templates
 # -----------------------------
 STATUS_TEMPLATES = {
-    "LWS": """Allgemein: Patient wach, orientiert. Haltung und Gang normal.  
-Inspektion: Keine sichtbare Fehlstellung. Palpation: Paravertebrale Druckdolenz vorhanden, Druckdolenz an Processi spinosi.  
+    "LWS": """Allgemein: Patient wach, orientiert. Haltung und Gang normal. Einbeinstand unauffälig.  
+Inspektion: Keine sichtbare Fehlstellung. Palpation: Paravertebrale Druckdolenz nicht vorhanden, keine Druckdolenz an Processi spinosi.  
 Bewegung: Flexion/Extension normal, Seitneigung normal. Lasègue-Test negativ, Quadrantentest unauffällig, 3-Phasentest unauffällig, Viererzeichen physiologisch. Keine neurologischen Ausfälle.""",
     "HWS": """Allgemein: Patient wach, orientiert. Haltung normal.  
-Inspektion: Keine Fehlstellung oder Schwellung. Palpation: Paravertebrale Muskelspannung normal, Druckdolenz nur minimal.  
-Bewegung: Flexion, Extension, Lateralflexion und Rotation unauffällig. Keine neurologischen Auffälligkeiten.""",
+Inspektion: Keine Fehlstellung oder Schwellung. Palpation: Paravertebrale Muskelspannung normal, keine Druckdolenz.  
+Bewegung: Flexion, Extension, Lateralflexion und Rotation unauffällig. Spurling Test negativ. Keine neurologischen Auffälligkeiten.""",
     "Schulter": """Allgemein: Patient wach, orientiert. Schulterbeweglichkeit symmetrisch.  
 Inspektion: Keine Schwellung, Rötung oder Atrophie. Palpation: keine Druckdolenz.  
-Bewegung: Abduktion, Anteversion, Retroversion, Innen- und Außenrotation physiologisch. Kraftprüfung normal. Keine neurologischen Auffälligkeiten.""",
-    "Knie": """Allgemein: Patient wach, orientiert. Kniebeweglichkeit symmetrisch.  
-Inspektion: Keine Schwellung, Rötung oder Deformität. Palpation: keine Druckdolenz, keine Gelenkergüsse.  
+Bewegung: Abduktion, Anteversion, Retroversion, Innen- und Aussenrotation physiologisch. Orientierend Schürzen- und Nackengriff problemlos, AC-Gelenk Palpation und Body-Cross-Provokation unauffälig. Kraftprüfung normal. Keine neurologischen Auffälligkeiten.""",
+    "Knie": """Allgemein: Patient wach, orientiert. Kniebeweglichkeit symmetrisch. Inspektion: Keine Schwellung, Rötung oder Deformität. Palpation: keine Druckdolenz, keine Gelenkergüsse.  
 Bewegung: Flexion und Extension physiologisch. Stabilitätstest unauffällig. Keine neurologischen Auffälligkeiten.""",
+    "Hüfte": """Rotationsprüfung: AR/IR schmerzfrei und nicht eingeschränkt, Drehmanzeichen negativ, kein axialer Stauchungsschmerz, kein Leistendruckschmerz."""
     "Hand": """Allgemein: Patient wach, orientiert. Hände normal gelagert.  
 Inspektion: Keine Deformitäten, Rötungen oder Schwellungen. Palpation: keine Druckdolenz an Gelenken oder Sehnen.  
 Bewegung: Daumen, Fingerbeweglichkeit und Greiffunktion unauffällig. Sensibilität und Kraft normal.""",
     "Internistisch": """Allgemeinzustand: Wach, orientiert, kein akuter Leidensdruck. Hautfarbe normal, keine Zyanose oder Ikterus. Atemwege frei, Atmung ruhig und regelmässig.  
 Herz: rhythmisch, keine Extrasystolen, keine Herzgeräusche. Kreislauf: Blutdruck und Puls physiologisch, keine peripheren Ödeme.  
-Abdomen: weich, nicht druckschmerzhaft, keine Resistenzen oder Organvergrößerungen palpabel. Leber- und Milzrand nicht tastbar. Keine Lymphadenopathie. Keine Zeichen für akute Infektion.""",
+Abdomen: weich, nicht druckschmerzhaft, keine Resistenzen oder Organvergrösserungen palpabel. Leber- und Milzrand nicht tastbar. Keine Lymphadenopathie. Keine Zeichen für akute Infektion.""",
     "Neuro": """Bewusstsein und Orientierung: wach, klar, orientiert zu Person, Ort und Zeit. Sprache und Sprachexpression unauffällig.  
 Motorik: Kraft symmetrisch in allen Extremitäten, kein Paresen. Sensibilität: Berührung, Schmerz, Vibration, Temperatur physiologisch.  
 Reflexe: physiologisch, keine pathologischen Babinski- oder Hoffmann-Zeichen. Koordination: Finger-Nase-Test, Knie-Hacke-Test unauffällig. Gang: stabil, ohne Ataxie. Keine Auffälligkeiten im Hirnnervenstatus."""
