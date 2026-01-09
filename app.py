@@ -335,5 +335,25 @@ if "generated_text" in st.session_state:
 # -------------------------
 st.caption(
     "Dieses Tool dient der Unterstützung beim Verfassen medizinischer Texte. "
-    "Die inhaltliche Verantwortung verbleibt bei der behandelnden Ärztin / beim behandelnden Arzt."
+    "Die inhaltliche Verantwortung verbleibt bei der behandelnden Ärztin / beim behandelnden Arzt.
+    "Es werden keine Daten gespeichert."
 )
+
+st.markdown("---")
+st.subheader("💬 Feedback / Rückmeldung")
+
+feedback = st.text_area(
+    "Schreibe dein Feedback oder Anmerkungen hier",
+    placeholder="z.B. 'Das Tool ist sehr hilfreich, aber Status-Text könnte länger sein…'",
+    height=80
+)
+
+if st.button("Feedback senden"):
+    if feedback.strip():
+        # Example: save feedback to a local file (or replace with DB / Google Sheet)
+        with open("feedback.txt", "a", encoding="utf-8") as f:
+            f.write(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {feedback}\n")
+        st.success("Danke für dein Feedback! 🙏")
+        st.experimental_rerun()  # Optional: clear text area after send
+    else:
+        st.warning("Bitte zuerst etwas Feedback eingeben.")
