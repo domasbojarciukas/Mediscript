@@ -335,7 +335,7 @@ if "generated_text" in st.session_state:
 # -------------------------
 st.caption(
     "Dieses Tool dient der Unterstützung beim Verfassen medizinischer Texte. "
-    "Die inhaltliche Verantwortung verbleibt bei der behandelnden Ärztin / beim behandelnden Arzt.
+    "Die inhaltliche Verantwortung verbleibt bei der behandelnden Ärztin / beim behandelnden Arzt."
     "Es werden keine Daten gespeichert."
 )
 
