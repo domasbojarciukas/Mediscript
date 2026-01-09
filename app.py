@@ -158,8 +158,8 @@ if doc_type == "Ambulanter Erstbericht":
     # AI generation trigger (example)
     # -----------------------------
     if st.button("Bericht generieren", key="erstbericht_button"):
-    bericht_text = "Hier würde der generierte Beurteilungstext erscheinen..."
-    procedere_text = "Hier würden die Bullet-Points für Procedere erscheinen."
+        bericht_text = "Hier würde der generierte Beurteilungstext erscheinen..."
+        procedere_text = "Hier würden die Bullet-Points für Procedere erscheinen."
 
     st.write("---")
     st.subheader("Generierter Bericht (Beurteilung)")
