@@ -52,7 +52,7 @@ Inspektion: Keine Schwellung, Rötung oder Atrophie. Palpation: keine Druckdolen
 Bewegung: Abduktion, Anteversion, Retroversion, Innen- und Aussenrotation physiologisch. Orientierend Schürzen- und Nackengriff problemlos, AC-Gelenk Palpation und Body-Cross-Provokation unauffälig. Kraftprüfung normal. Keine neurologischen Auffälligkeiten.""",
     "Knie": """Allgemein: Patient wach, orientiert. Kniebeweglichkeit symmetrisch. Inspektion: Keine Schwellung, Rötung oder Deformität. Palpation: keine Druckdolenz, keine Gelenkergüsse.  
 Bewegung: Flexion und Extension physiologisch. Stabilitätstest unauffällig. Keine neurologischen Auffälligkeiten.""",
-    "Hüfte": """Rotationsprüfung: AR/IR schmerzfrei und nicht eingeschränkt, Drehmanzeichen negativ, kein axialer Stauchungsschmerz, kein Leistendruckschmerz."""
+    "Hüfte": """Rotationsprüfung: AR/IR schmerzfrei und nicht eingeschränkt, Drehmanzeichen negativ, kein axialer Stauchungsschmerz, kein Leistendruckschmerz.""",
     "Hand": """Allgemein: Patient wach, orientiert. Hände normal gelagert.  
 Inspektion: Keine Deformitäten, Rötungen oder Schwellungen. Palpation: keine Druckdolenz an Gelenken oder Sehnen.  
 Bewegung: Daumen, Fingerbeweglichkeit und Greiffunktion unauffällig. Sensibilität und Kraft normal.""",
