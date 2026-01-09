@@ -263,24 +263,25 @@ if "generated_text" in st.session_state:
     primary_color = st.get_option("theme.primaryColor")
 
     components.html(f"""
-        <button style="
-            padding: 0.45em 1em;
-            font-size: 1em;
-            font-weight: 600;
-            border-radius: 0.25em;
-            border: none;
-            background-color: {primary_color};
-            color: white;
-            cursor: pointer;
-        "
-        onclick="
-            const text = `{safe_text}`;
-            navigator.clipboard.writeText(text).then(() => {{
-                alert('Bericht in die Zwischenablage kopiert!');
-            }});">
-            Bericht kopieren
-        </button>
-    """, height=40)
+    <button style='
+        padding: 0.45em 1em;
+        font-size: 1em;
+        font-weight: 600;
+        border-radius: 0.25em;
+        border: none;
+        background-color: {primary_color};
+        color: white;
+        cursor: pointer;
+    '
+    onclick='
+        const text = `{safe_text}`;
+        navigator.clipboard.writeText(text).then(() => {{
+            alert("Bericht in die Zwischenablage kopiert!");
+        }});
+    '>
+        Bericht kopieren
+    </button>
+""", height=40)
 
     st.info(f"⏱️ Bericht generiert in {st.session_state.elapsed_time:.2f} Sekunden")
 
