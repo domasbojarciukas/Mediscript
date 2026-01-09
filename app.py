@@ -69,7 +69,7 @@ Inspektion: Keine Schwellung, Rötung oder Atrophie. Palpation: keine Druckdolen
     "Hüfte": """Rotationsprüfung: AR/IR schmerzfrei und nicht eingeschränkt, Drehmanzeichen negativ, kein axialer Stauchungsschmerz, kein Leistendruckschmerz.""",
     "Hand": """Allgemein: Patient wach, orientiert. Hände normal gelagert.  
 Inspektion: Keine Deformitäten, Rötungen oder Schwellungen. Palpation: keine Druckdolenz. Bewegung: Daumen, Fingerbeweglichkeit und Greiffunktion unauffällig.""",
-    "Internistisch": """Allgemeinzustand: Wach, orientiert, kein akuter Leidensdruck. Hautfarbe normal, keine Zyanose oder Ikterus. Herz: rhythmisch, keine Extrasystolen. Abdomen: weich, nicht druckschmerzhaft. Keine Resistenzen tastbar.""",
+    "Internistisch": """Allgemeinzustand: Wach, orientiert, kein akuter Leidensdruck. Hautfarbe normal, keine Zyanose oder Ikterus. Lunge: ubiquitär vesikuläre Atemgeräusche. Herz: rhythmisch, keine Extrasystolen. Abdomen: weich, nicht druckschmerzhaft. Keine Resistenzen tastbar.""",
     "Neuro": """Bewusstsein und Orientierung: wach, klar, orientiert zu Person, Ort und Zeit. Sprache und Sprachexpression unauffällig. Motorik: Kraft symmetrisch, Sensibilität physiologisch. Reflexe physiologisch. Koordination unauffällig."""
 }
 
