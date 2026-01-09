@@ -347,33 +347,28 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# --- session state init (MUST be before widget) ---
-if "feedback_text" not in st.session_state:
-    st.session_state.feedback_text = ""
-
-if "feedback_sent" not in st.session_state:
-    st.session_state.feedback_sent = False
+# --- initialize counter ---
+if "feedback_key" not in st.session_state:
+    st.session_state.feedback_key = 0
 
 feedback = st.text_area(
     "Schreibe dein Feedback oder Anmerkungen hier",
-    key="feedback_text",
     placeholder="z.B. „Das Tool ist sehr hilfreich, aber der Status-Text könnte ausführlicher sein …“",
-    height=80
+    height=80,
+    key=f"feedback_{st.session_state.feedback_key}"
 )
 
 if st.button("Feedback senden"):
-    if st.session_state.feedback_text.strip():
+    if feedback.strip():
         with open("feedback.txt", "a", encoding="utf-8") as f:
             f.write(
-                f"{time.strftime('%Y-%m-%d %H:%M:%S')} - "
-                f"{st.session_state.feedback_text.strip()}\n"
+                f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {feedback.strip()}\n"
             )
 
-        # reset state SAFELY
-        st.session_state.feedback_text = ""
-        st.session_state.feedback_sent = True
+        st.success("Danke für dein Feedback! 🙏")
+
+        # 🔁 rotate key → creates a fresh text_area
+        st.session_state.feedback_key += 1
+
     else:
         st.warning("Bitte zuerst etwas Feedback eingeben.")
-
-if st.session_state.feedback_sent:
-    st.success("Danke für dein Feedback! 🙏")
