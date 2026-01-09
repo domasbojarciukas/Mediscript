@@ -340,7 +340,12 @@ st.caption(
 )
 
 st.markdown("---")
-st.subheader("💬 Feedback / Rückmeldung")
+st.markdown(
+    "<div style='font-size:13px; font-weight:600; margin-bottom:4px;'>"
+    "💬 Feedback / Rückmeldung"
+    "</div>",
+    unsafe_allow_html=True
+)
 
 feedback = st.text_area(
     "Schreibe dein Feedback oder Anmerkungen hier",
