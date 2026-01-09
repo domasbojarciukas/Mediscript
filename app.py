@@ -341,7 +341,7 @@ st.caption(
 
 st.markdown("---")
 st.markdown(
-    "<div style='font-size:13px; font-weight:600; margin-bottom:4px;'>"
+    "<div style='font-size:16px; font-weight:600; margin-bottom:4px;'>"
     "💬 Feedback / Rückmeldung"
     "</div>",
     unsafe_allow_html=True
