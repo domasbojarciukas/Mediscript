@@ -10,25 +10,25 @@ from email.mime.text import MIMEText
 # Page config + hide header/footer
 # -----------------------------
 st.set_page_config(page_title="Mediscript", layout="centered")
-st.markdown("""
-<style>
-/* Hide collapse button */
-button[data-testid="collapsedControl"] {
-    display: none;
-}
+st.markdown(
+    """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
 
-/* Force sidebar always visible */
-section[data-testid="stSidebar"] {
-    min-width: 300px;
-    max-width: 300px;
-    transform: none !important;
-}
+    button[data-testid="collapsedControl"] {
+        display: none;
+    }
 
-/* Prevent main content from shifting */
-div[data-testid="stSidebar"][aria-expanded="false"] {
-    transform: none !important;
-}
-</style>
+    section[data-testid="stSidebar"] {
+        min-width: 300px;
+        max-width: 300px;
+        transform: none !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 # -----------------------------
 # Feedback email function
