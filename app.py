@@ -139,6 +139,14 @@ if doc_type == "Ambulanter Erstbericht":
     )
 
     st.write("---")
+
+    with st.expander("Strukturierte Input-Vorschau (für Überprüfung)"):
+    st.markdown(
+        f"**Jetzige Leiden:**\n{jetzige_leiden}\n\n"
+        f"**Anamnese:**\n{anamnesis}\n\n"
+        f"**Status:**\n{status_text}\n"
+    )
+    
     st.subheader("Strukturierte Input-Vorschau")
     st.markdown(
         f"**Jetzige Leiden:**\n{jetzige_leiden}\n\n"
@@ -150,15 +158,15 @@ if doc_type == "Ambulanter Erstbericht":
     # AI generation trigger (example)
     # -----------------------------
     if st.button("Bericht generieren", key="erstbericht_button"):
-        if user_input.strip() != "":
-            bericht_text = "Hier würde der generierte Beurteilungstext erscheinen..."
-            procedere_text = "Hier würden die Bullet-Points für Procedere erscheinen."
+    bericht_text = "Hier würde der generierte Beurteilungstext erscheinen..."
+    procedere_text = "Hier würden die Bullet-Points für Procedere erscheinen."
 
-            st.subheader("Generierter Bericht (Beurteilung)")
-            st.write(bericht_text)
+    st.write("---")
+    st.subheader("Generierter Bericht (Beurteilung)")
+    st.write(bericht_text)
 
-            st.subheader("Procedere")
-            st.write(procedere_text)
+    st.subheader("Procedere")
+    st.write(procedere_text)
 
 elif doc_type == "Ambulanter Verlaufsbericht":
     patient = st.text_input(
