@@ -13,21 +13,18 @@ st.set_page_config(page_title="Mediscript", layout="centered")
 st.markdown(
     """
     <style>
-    /* --- FOLIUM-STYLE SIDEBAR RADIO BUTTONS --- */
-
     /* Hide radio circles */
     div[role="radiogroup"] > label > div:first-child {
         display: none;
     }
 
-    /* Base button style */
+    /* Base */
     div[role="radiogroup"] label {
         display: block;
         width: 100%;
         padding: 0.4rem 0.6rem;
         margin: 0.1rem 0;
         border-radius: 6px;
-        border: 1px solid transparent;
         background-color: transparent;
         cursor: pointer;
         font-size: 0.9rem;
@@ -36,32 +33,24 @@ st.markdown(
         transition: background-color 0.1s ease;
     }
 
-    /* Hover (lighter) */
+    /* Hover */
     div[role="radiogroup"] label:hover {
-    background-color: rgba(151, 166, 195, 0.12);
+        background-color: rgba(151, 166, 195, 0.12);
     }
 
-    /* Selected (persistent) – CORRECT selector */
+    /* ✅ Selected (persistent) */
     div[role="radiogroup"] input[type="radio"]:checked + div + label {
-    background-color: rgba(151, 166, 195, 0.22);
-    font-weight: 500;
+        background-color: rgba(151, 166, 195, 0.22);
+        font-weight: 500;
     }
 
-    /* Hover on selected */
+    /* Selected hover */
     div[role="radiogroup"] input[type="radio"]:checked + div + label:hover {
-    background-color: rgba(151, 166, 195, 0.26);
+        background-color: rgba(151, 166, 195, 0.26);
     }
 
-    /* Sidebar padding similar to Folium */
     section[data-testid="stSidebar"] {
         padding-top: 0.5rem;
-    }
-
-    /* Sidebar title spacing */
-    section[data-testid="stSidebar"] h1,
-    section[data-testid="stSidebar"] h2,
-    section[data-testid="stSidebar"] h3 {
-        margin-bottom: 0.5rem;
     }
     </style>
     """,
