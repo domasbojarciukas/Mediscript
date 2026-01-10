@@ -13,9 +13,10 @@ st.set_page_config(page_title="Mediscript", layout="centered")
 st.markdown(
     """
     <style>
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
+    /* Hide header and footer */
+    header, footer {visibility: hidden;}
 
+    /* Sidebar width */
     section[data-testid="stSidebar"] {
         min-width: 300px;
         max-width: 300px;
@@ -28,36 +29,35 @@ st.markdown(
         display: none;
     }
 
-    /* Base styling for labels */
+    /* Base label styling */
     div[role="radiogroup"] label {
         display: block;
         width: 100%;
         padding: 0.4rem 0.6rem;
         margin: 0.1rem 0;
-        border-radius: 6px;
+        border-radius: 6px;  /* Rounded button */
         background-color: transparent;
         cursor: pointer;
         font-size: 0.9rem;
         font-weight: 400;
         color: rgb(49, 51, 63);
-        transition: background-color 0.1s ease;
+        transition: background-color 0.1s ease, font-weight 0.1s ease;
     }
 
-    /* Hover */
+    /* Hover effect */
+    div[role="radiogroup"] label:hover {
+        background-color: rgba(151, 166, 195, 0.12);
+    }
+
+    /* Selected option (full label) */
+    div[role="radiogroup"] label:has(input[type="radio"]:checked) {
+        background-color: rgba(151, 166, 195, 0.22);
+        font-weight: 500;
+    }
+
+    /* Selected + hover */
     div[role="radiogroup"] label:has(input[type="radio"]:checked):hover {
         background-color: rgba(151, 166, 195, 0.26);
-    }
-    }
-
-    /* ✅ Selected (persistent) */
-    div[role="radiogroup"] input[type="radio"]:checked + div {
-        background-color: rgba(151, 166, 195, 0.26);
-        font-weight: 300;
-    }
-
-    /* Selected hover */
-    div[role="radiogroup"] input[type="radio"]:checked + div:hover {
-        background-color: rgba(151, 166, 195, 0.12);
     }
     </style>
     """,
