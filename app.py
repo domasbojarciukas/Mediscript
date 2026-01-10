@@ -36,16 +36,20 @@ st.markdown(
         transition: background-color 0.1s ease;
     }
 
-    /* Hover */
+    /* Hover (lighter) */
     div[role="radiogroup"] label:hover {
-        background-color: rgba(151, 166, 195, 0.12);
+    background-color: rgba(151, 166, 195, 0.12);
     }
 
-    /* Selected (this is the key part) */
+    /* Selected (persistent, darker than hover) */
     div[role="radiogroup"] label[data-checked="true"] {
-    background-color: rgba(151, 166, 195, 0.18);
+    background-color: rgba(151, 166, 195, 0.22);
     font-weight: 500;
-    color: rgb(49, 51, 63);
+    }
+
+    /* Hover on selected (optional but very Folium-like) */
+    div[role="radiogroup"] label[data-checked="true"]:hover {
+    background-color: rgba(151, 166, 195, 0.26);
     }
 
     /* Sidebar padding similar to Folium */
