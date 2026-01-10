@@ -50,7 +50,7 @@ st.markdown(
 
     /* ✅ Selected (persistent) */
     div[role="radiogroup"] input[type="radio"]:checked + div {
-        background-color: rgba(151, 166, 195, 0.22);
+        background-color: rgba(151, 166, 195, 0.12);
         font-weight: 500;
     }
 
