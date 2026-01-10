@@ -13,19 +13,18 @@ st.set_page_config(page_title="Mediscript", layout="centered")
 st.markdown(
     """
     <style>
-    header {
-        opacity: 0;          /* invisible */
-        height: 0px;         /* minimal */
-        pointer-events: none;
-    }
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
 
     button[data-testid="collapsedControl"] {
-        opacity: 1 !important;
-        pointer-events: auto !important;
-        position: fixed !important;
-        top: 80px;
-        left: 10px;
-        z-index: 1000;
+        display: none;
+    }
+
+    section[data-testid="stSidebar"] {
+        min-width: 300px;
+        max-width: 300px;
+        transform: none !important;
     }
     </style>
     """,
