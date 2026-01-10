@@ -13,18 +13,12 @@ st.set_page_config(page_title="Mediscript", layout="centered")
 st.markdown(
     """
     <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-
+    /* Move sidebar collapse button down */
     button[data-testid="collapsedControl"] {
-        display: none;
-    }
-
-    section[data-testid="stSidebar"] {
-        min-width: 300px;
-        max-width: 300px;
-        transform: none !important;
+        top: 60px !important;   /* adjust this value */
+        left: 10px !important;
+        position: fixed !important;
+        z-index: 1000;
     }
     </style>
     """,
