@@ -13,18 +13,41 @@ st.set_page_config(page_title="Mediscript", layout="centered")
 st.markdown(
     """
     <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-
-    button[data-testid="collapsedControl"] {
+    /* Remove radio circles */
+    div[role="radiogroup"] > label > div:first-child {
         display: none;
     }
 
+    /* Make radio labels full-width buttons */
+    div[role="radiogroup"] label {
+        width: 100%;
+        margin: 0.15rem 0;
+        padding: 0.55rem 0.75rem;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+        background-color: #ffffff;
+        cursor: pointer;
+        transition: background-color 0.15s ease, border-color 0.15s ease;
+        font-weight: 500;
+    }
+
+    /* Hover effect */
+    div[role="radiogroup"] label:hover {
+        background-color: #f3f6fb;
+        border-color: #c7d2fe;
+    }
+
+    /* Selected item */
+    div[role="radiogroup"] label[data-checked="true"] {
+        background-color: #e8efff;
+        border-color: #4f46e5;
+        color: #1e1b4b;
+        font-weight: 600;
+    }
+
+    /* Sidebar spacing */
     section[data-testid="stSidebar"] {
-        min-width: 300px;
-        max-width: 300px;
-        transform: none !important;
+        padding-top: 1rem;
     }
     </style>
     """,
