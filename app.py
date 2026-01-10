@@ -13,18 +13,24 @@ st.set_page_config(page_title="Mediscript", layout="centered")
 st.markdown(
     """
     <style>
-    /* Move sidebar collapse button down */
+    header {
+        opacity: 0;          /* invisible */
+        height: 0px;         /* minimal */
+        pointer-events: none;
+    }
+
     button[data-testid="collapsedControl"] {
-        top: 60px !important;   /* adjust this value */
-        left: 10px !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
         position: fixed !important;
+        top: 80px;
+        left: 10px;
         z-index: 1000;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
-
 # -----------------------------
 # Feedback email function
 # -----------------------------
