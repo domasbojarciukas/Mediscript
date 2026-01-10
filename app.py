@@ -10,10 +10,10 @@ from email.mime.text import MIMEText
 # Page config + hide header/footer
 # -----------------------------
 st.set_page_config(page_title="Mediscript", layout="centered")
-header { visibility: hidden; }
 st.markdown(
     """
     <style>
+    header { visibility: hidden; }
     /* Hide radio circles */
     div[role="radiogroup"] > label > div:first-child {
         display: none;
