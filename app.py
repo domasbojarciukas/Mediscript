@@ -17,7 +17,9 @@ st.markdown(
        1. HIDE SIDEBAR COLLAPSE BUTTON
        =============================== */
 
- 
+    button[data-testid="collapsedControl"] {
+        display: none !important;
+    }
 
     /* ===============================
        2. FOLIUM-LIKE SIDEBAR RADIOS
