@@ -56,7 +56,7 @@ st.markdown(
 
     /* Selected hover */
     div[role="radiogroup"] input[type="radio"]:checked + div:hover {
-        background-color: rgba(151, 166, 195, 0.26);
+        background-color: rgba(151, 166, 195, 0.12);
     }
     </style>
     """,
