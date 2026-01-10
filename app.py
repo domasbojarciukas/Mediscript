@@ -14,10 +14,12 @@ st.markdown(
     """
     <style>
     footer {visibility: hidden;}
-    
+    header {visibility: hidden;}
 
-    button[data-testid="collapsedControl"] {
-        display: none;
+    section[data-testid="stSidebar"] {
+        min-width: 300px;
+        max-width: 300px;
+        transform: none !important;
     }
 
     /* Hide radio circles */
