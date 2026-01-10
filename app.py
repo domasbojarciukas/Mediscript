@@ -13,14 +13,25 @@ st.set_page_config(page_title="Mediscript", layout="centered")
 st.markdown(
     """
     <style>
-    header { visibility: hidden; }
+    /* ===============================
+       1. HIDE SIDEBAR COLLAPSE BUTTON
+       =============================== */
+
+    button[data-testid="collapsedControl"] {
+        display: none !important;
+    }
+
+    /* ===============================
+       2. FOLIUM-LIKE SIDEBAR RADIOS
+       =============================== */
+
     /* Hide radio circles */
-    div[role="radiogroup"] > label > div:first-child {
+    section[data-testid="stSidebar"] input[type="radio"] {
         display: none;
     }
 
-    /* Base */
-    div[role="radiogroup"] label {
+    /* Base label style */
+    section[data-testid="stSidebar"] label {
         display: block;
         width: 100%;
         padding: 0.4rem 0.6rem;
@@ -31,25 +42,28 @@ st.markdown(
         font-size: 0.9rem;
         font-weight: 400;
         color: rgb(49, 51, 63);
-        transition: background-color 0.1s ease;
+        transition: background-color 0.12s ease;
     }
 
-    /* Hover */
-    div[role="radiogroup"] label:hover {
+    /* Hover (light) */
+    section[data-testid="stSidebar"] label:hover {
         background-color: rgba(151, 166, 195, 0.12);
     }
 
-    /* ✅ Selected (persistent) */
-    div[role="radiogroup"] input[type="radio"]:checked + div + label {
+    /* ✅ SELECTED — PERSISTENT */
+    section[data-testid="stSidebar"]
+    input[type="radio"]:checked + div + label {
         background-color: rgba(151, 166, 195, 0.22);
         font-weight: 500;
     }
 
-    /* Selected hover */
-    div[role="radiogroup"] input[type="radio"]:checked + div + label:hover {
+    /* Selected + hover */
+    section[data-testid="stSidebar"]
+    input[type="radio"]:checked + div + label:hover {
         background-color: rgba(151, 166, 195, 0.26);
     }
 
+    /* Sidebar spacing */
     section[data-testid="stSidebar"] {
         padding-top: 0.5rem;
     }
