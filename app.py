@@ -13,41 +13,51 @@ st.set_page_config(page_title="Mediscript", layout="centered")
 st.markdown(
     """
     <style>
-    /* Remove radio circles */
+    /* --- FOLIUM-STYLE SIDEBAR RADIO BUTTONS --- */
+
+    /* Hide radio circles */
     div[role="radiogroup"] > label > div:first-child {
         display: none;
     }
 
-    /* Make radio labels full-width buttons */
+    /* Base button style */
     div[role="radiogroup"] label {
+        display: block;
         width: 100%;
-        margin: 0.15rem 0;
-        padding: 0.55rem 0.75rem;
-        border-radius: 8px;
-        border: 1px solid #e0e0e0;
-        background-color: #ffffff;
+        padding: 0.4rem 0.6rem;
+        margin: 0.1rem 0;
+        border-radius: 6px;
+        border: 1px solid transparent;
+        background-color: transparent;
         cursor: pointer;
-        transition: background-color 0.15s ease, border-color 0.15s ease;
-        font-weight: 500;
+        font-size: 0.9rem;
+        font-weight: 400;
+        color: rgb(49, 51, 63);
+        transition: background-color 0.1s ease;
     }
 
-    /* Hover effect */
+    /* Hover */
     div[role="radiogroup"] label:hover {
-        background-color: #f3f6fb;
-        border-color: #c7d2fe;
+        background-color: rgba(151, 166, 195, 0.12);
     }
 
-    /* Selected item */
+    /* Selected (this is the key part) */
     div[role="radiogroup"] label[data-checked="true"] {
-        background-color: #e8efff;
-        border-color: #4f46e5;
-        color: #1e1b4b;
-        font-weight: 600;
+        background-color: rgba(151, 166, 195, 0.22);
+        font-weight: 500;
+        color: rgb(49, 51, 63);
     }
 
-    /* Sidebar spacing */
+    /* Sidebar padding similar to Folium */
     section[data-testid="stSidebar"] {
-        padding-top: 1rem;
+        padding-top: 0.5rem;
+    }
+
+    /* Sidebar title spacing */
+    section[data-testid="stSidebar"] h1,
+    section[data-testid="stSidebar"] h2,
+    section[data-testid="stSidebar"] h3 {
+        margin-bottom: 0.5rem;
     }
     </style>
     """,
