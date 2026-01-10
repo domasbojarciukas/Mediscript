@@ -43,9 +43,9 @@ st.markdown(
 
     /* Selected (this is the key part) */
     div[role="radiogroup"] label[data-checked="true"] {
-        background-color: rgba(151, 166, 195, 0.22);
-        font-weight: 500;
-        color: rgb(49, 51, 63);
+    background-color: rgba(151, 166, 195, 0.18);
+    font-weight: 500;
+    color: rgb(49, 51, 63);
     }
 
     /* Sidebar padding similar to Folium */
