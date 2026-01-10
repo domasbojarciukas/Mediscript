@@ -14,7 +14,7 @@ st.markdown(
     """
     <style>
     footer {visibility: hidden;}
-    header {visibility: hidden;}
+    
 
     button[data-testid="collapsedControl"] {
         display: none;
