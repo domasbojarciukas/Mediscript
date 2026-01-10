@@ -51,7 +51,7 @@ st.markdown(
     /* ✅ Selected (persistent) */
     div[role="radiogroup"] input[type="radio"]:checked + div {
         background-color: rgba(151, 166, 195, 0.26);
-        font-weight: 500;
+        font-weight: 300;
     }
 
     /* Selected hover */
