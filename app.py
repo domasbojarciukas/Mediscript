@@ -44,8 +44,9 @@ st.markdown(
     }
 
     /* Hover */
-    div[role="radiogroup"] label:hover {
-        background-color: rgba(151, 166, 195, 0.12);
+    div[role="radiogroup"] label:has(input[type="radio"]:checked):hover {
+        background-color: rgba(151, 166, 195, 0.26);
+    }
     }
 
     /* ✅ Selected (persistent) */
