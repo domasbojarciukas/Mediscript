@@ -20,6 +20,7 @@ st.markdown(
         min-width: 300px;
         max-width: 300px;
         transform: none !important;
+        padding-top: 0.5rem;
     }
 
     /* Hide radio circles */
@@ -27,7 +28,7 @@ st.markdown(
         display: none;
     }
 
-    /* Base */
+    /* Base styling for labels */
     div[role="radiogroup"] label {
         display: block;
         width: 100%;
@@ -48,18 +49,14 @@ st.markdown(
     }
 
     /* ✅ Selected (persistent) */
-    div[role="radiogroup"] input[type="radio"]:checked + div + label {
+    div[role="radiogroup"] input[type="radio"]:checked + div {
         background-color: rgba(151, 166, 195, 0.22);
         font-weight: 500;
     }
 
     /* Selected hover */
-    div[role="radiogroup"] input[type="radio"]:checked + div + label:hover {
+    div[role="radiogroup"] input[type="radio"]:checked + div:hover {
         background-color: rgba(151, 166, 195, 0.26);
-    }
-
-    section[data-testid="stSidebar"] {
-        padding-top: 0.5rem;
     }
     </style>
     """,
