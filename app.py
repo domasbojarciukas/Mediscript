@@ -41,14 +41,14 @@ st.markdown(
     background-color: rgba(151, 166, 195, 0.12);
     }
 
-    /* Selected (persistent, darker than hover) */
-    div[role="radiogroup"] label[data-checked="true"] {
+    /* Selected (persistent) – CORRECT selector */
+    div[role="radiogroup"] input[type="radio"]:checked + div + label {
     background-color: rgba(151, 166, 195, 0.22);
     font-weight: 500;
     }
 
-    /* Hover on selected (optional but very Folium-like) */
-    div[role="radiogroup"] label[data-checked="true"]:hover {
+    /* Hover on selected */
+    div[role="radiogroup"] input[type="radio"]:checked + div + label:hover {
     background-color: rgba(151, 166, 195, 0.26);
     }
 
